@@ -9,7 +9,7 @@ module Urban
     url = URI.encode('http://www.urbandictionary.com/random.php')
     doc = Nokogiri.HTML(open(url))
     word = clean_text(doc.at_css('.word')).humanize
-    definition = clean_text(doc.at_css('.definition')).humanize.gsub(/\. \w/) { |char| char.upcase }
+    definition = clean_text(doc.at_css('.definition')).gsub(/\s{2,}/, ' ').gsub(/^\s*\w|\.\s+\w/) { |char| char.upcase }
     puts "#{word}: #{definition}"
   end
 
