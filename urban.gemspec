@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'nokogiri'
   s.add_dependency 'i18n'
   s.add_dependency 'activesupport'
+  s.add_development_dependency 'ruby-debug19'
 end

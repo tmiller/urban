@@ -6,23 +6,23 @@ require 'active_support/core_ext/string/inflections'
 
 module Urban
   def self.random
-    url = URI.encode("http://www.urbandictionary.com/random.php")
+    url = URI.encode('http://www.urbandictionary.com/random.php')
     doc = Nokogiri.HTML(open(url))
     word = clean_text(doc.at_css('.word')).humanize
-    definition = clean_text(doc.at_css('.definition')).humanize
+    definition = clean_text(doc.at_css('.definition')).humanize.gsub(/\. \w/) { |char| char.upcase }
     puts "#{word}: #{definition}"
   end
 
   private
   def self.clean_text(node_set)
     node_set.children.each do |node|
-      if node.text?
-        node.content = node.content.strip << ' '
-      else
+      if node.name == 'br'
         node.remove
+      else
+        node.content = node.content.strip << ' '
       end
     end
-    return node_set.content.strip
+    return node_set.content.strip.gsub(/ \./, '.')
   end
 
 end
