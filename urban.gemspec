@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_development_dependency 'nokogiri'
+  s.add_development_dependency 'i18n'
   s.add_development_dependency 'activesupport'
 end

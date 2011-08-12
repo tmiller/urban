@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'urban/version'
+require 'urban'
+
+Urban.random
