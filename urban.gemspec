@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Urban::VERSION
   s.authors     = ['Tom Miller']
   s.email       = ['jackerran@gmail.com']
-  s.homepage    = ''
+  s.homepage    = 'https://github.com/tmiller/urban'
   s.summary     = %q{A scraper for Urban Dictionary}
   s.description = %q{A scraper for urban dictionary. It comes with a command line tool to get random definitions from urbandictionary.com.}
 
