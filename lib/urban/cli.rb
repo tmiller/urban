@@ -2,7 +2,7 @@ require 'urban/dictionary'
 
 module Urban
 
-  def self.process
+  def process
     result = random
     puts "#{result[:word]}: #{result[:definition]}"
   end

@@ -4,18 +4,32 @@ require 'open-uri'
 require 'nokogiri'
 
 module Urban
+  extend self
 
-  URL = 'http://www.urbandictionary.com/'
+  URL = 'http://www.urbandictionary.com'
 
-  def self.random
-    doc = Nokogiri.HTML(open(URI.encode("#{URL}random.php")))
-    word = clean_text(doc.at_css('.word')).gsub(/^\s*\w/) { |char| char.upcase }
-    definition = paragraphize(doc.at_css('.definition'))
-    return { word: word, definition: definition }
+  def random
+    get_definition(query(:random))
+  end
+
+  def define(word)
+    get_definition(query(:define, word))
   end
 
   private
-  def self.clean_text(node_set)
+  def get_definition(document)
+    word = wordize(document.at_css('.word'))
+    definition = definitionize(document.at_css('.definition'))
+    return { word: word, definition: definition }
+  end
+
+  def query(type, word = nil)
+    query = "#{type.to_s}.php"
+    query << "?term=#{word}" if word
+    doc = Nokogiri.HTML(open(URI.encode("#{URL}/#{query}")))
+  end
+
+  def clean(node_set)
     node_set.children.each do |node|
       if node.name == 'br'
         node.remove
@@ -26,8 +40,11 @@ module Urban
     return node_set.content.strip.gsub(/ \./, '.')
   end
 
-  def self.paragraphize(string)
-    text = clean_text(string)
-    return text.gsub(/\s{2,}/, ' ').gsub(/^\s*\w|\.\s+\w/) { |char| char.upcase }
+  def wordize(string)
+    return clean(string).gsub(/^\s*\w/) { |char| char.upcase }
+  end
+
+  def definitionize(string)
+    return clean(string).gsub(/\s{2,}/, ' ').gsub(/^\s*\w|\.\s+\w/) { |char| char.upcase }
   end
 end
