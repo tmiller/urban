@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
 require 'urban/version'
-require 'urban'
+require 'urban/cli'
 
-Urban.random
+Urban.process
