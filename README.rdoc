@@ -31,7 +31,6 @@ With git and local working copy
 == To Do
 
 * Write Tests
-* Implement looking up a word
 * Document with {YARD}[http://yardoc.org]
 * Implement -l switch to list all definitions
 
