@@ -20,9 +20,9 @@ With git and local working copy
 
 == Usage
 
-=== 1. Look up a word
+=== 1. Look up a definition
 
-    $ urban cookie
+    $ urban cookie monster
 
 === 2. Random word
 
