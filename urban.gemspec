@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Urban::VERSION
   s.authors     = ['Thomas Miller']
   s.email       = ['jackerran@gmail.com']
+  s.license     = ['MIT']
   s.homepage    = 'https://github.com/tmiller/urban'
   s.summary     = %q{A command line tool that interfaces with Urban Dictionary.}
   s.description = %q{Urban is a command line tool that allows you to look up definitions
@@ -19,6 +20,6 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.add_dependency 'nokogiri'
-  s.add_development_dependency 'ruby-debug19'
+  s.add_dependency 'nokogiri', '~> 1.5.0'
+  s.add_development_dependency 'ruby-debug19', '~> 0.11.6'
 end

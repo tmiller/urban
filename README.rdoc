@@ -33,6 +33,7 @@ With git and local working copy
 * Write Tests
 * Document with {YARD}[http://yardoc.org]
 * Implement -l switch to list all definitions
+* Implement -h --help switch to output usage information
 
 == Test words for formatting
 
