@@ -16,7 +16,7 @@ With git and local working copy
 
     $ git clone git://github.com/tmiller/urban.git
     $ cd urban
-    $ rake build && sudo rake install
+    $ sudo rake install
 
 == Usage
 
@@ -33,6 +33,7 @@ With git and local working copy
 * Write Tests
 * Implement looking up a word
 * Document with {YARD}[http://yardoc.org]
+* Implement -l switch to list all definitions
 
 == Test words for formatting
 
