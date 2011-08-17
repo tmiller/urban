@@ -33,7 +33,6 @@ With git and local working copy
 * Write Tests
 * Implement looking up a word
 * Document with {YARD}[http://yardoc.org]
-* Implement -l switch for listing all definitions for a word
 
 == Test words for formatting
 
