@@ -7,6 +7,7 @@ module Urban
   extend self
 
   URL = 'http://www.urbandictionary.com'
+  TAB = "\s" * 4
 
   def random
     get_definition(query(:random))
@@ -16,10 +17,9 @@ module Urban
     get_definition(query(:define, word))
   end
 
-  private
   def get_definition(document)
-    word = wordize(document.at_css('.word'))
-    definition = definitionize(document.at_css('.definition'))
+    word = wordize(node_to_s(document.at_css('.word')))
+    definition = definitionize(node_to_s(document.at_css('.definition')))
     return { word: word, definition: definition }
   end
 
@@ -29,22 +29,26 @@ module Urban
     doc = Nokogiri.HTML(open(URI.encode("#{URL}/#{query}")))
   end
 
-  def clean(node_set)
+  def node_to_s(node_set)
     node_set.children.each do |node|
-      if node.name == 'br'
+      case node.name
+      when 'br'
+        node.previous.content = node.previous.content << "\n" if node.previous
         node.remove
-      else
-        node.content = node.content.strip << ' '
       end
     end
-    return node_set.content.strip.gsub(/ \./, '.')
+    return node_set.content.strip.gsub(/\r|\n/, "\n#{TAB}")
+  end
+
+  def capitalize(string, pattern)
+    return string.gsub(pattern, &:upcase).gsub(/\s{2,}/, ' ')
   end
 
   def wordize(string)
-    return clean(string).gsub(/^\s*\w/) { |char| char.upcase }
+    return capitalize(string, /^\s*\w/)
   end
 
   def definitionize(string)
-    return clean(string).gsub(/\s{2,}/, ' ').gsub(/^\s*\w|\.\s+\w/) { |char| char.upcase }
+    return capitalize(string, /^\s*\w|\.\s+\w/)
   end
 end
