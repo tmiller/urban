@@ -20,7 +20,7 @@ With git and local working copy
 
 == Usage
 
-=== 1. Look up a word (Not working)
+=== 1. Look up a word
 
     $ urban cookie
 

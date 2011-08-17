@@ -7,7 +7,6 @@ module Urban
   extend self
 
   URL = 'http://www.urbandictionary.com'
-  TAB = "\s" * 4
 
   def random
     get_definition(query(:random))
@@ -37,7 +36,7 @@ module Urban
         node.remove
       end
     end
-    return node_set.content.strip.gsub(/\r|\n/, "\n#{TAB}")
+    return node_set.content.strip.gsub(/\r/, "\n")
   end
 
   def capitalize(string, pattern)
