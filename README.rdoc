@@ -1,7 +1,7 @@
 = Urban
 
-Urban is a command line tool that allows you to look up definitions on
-{Urban Dictionary}[http://www.urbandictionary.com].
+Urban is a command line tool that allows you to look up definitions or pull a
+random definition from {Urban Dictionary}[http://www.urbandictionary.com].
 
 * {Git}[http://github.com/tmiller/urban]
 * {Bug Tracker}[http://github.com/tmiller/urban/issues]
