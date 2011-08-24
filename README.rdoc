@@ -6,6 +6,10 @@ random definition from {Urban Dictionary}[http://www.urbandictionary.com].
 * {Git}[http://github.com/tmiller/urban]
 * {Bug Tracker}[http://github.com/tmiller/urban/issues]
 
+== Requirements
+
+* >= Ruby 1.9.2-p290
+
 == Installation
 
 With Rubygems:

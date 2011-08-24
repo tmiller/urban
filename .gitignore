@@ -15,3 +15,8 @@ Session.vim
 .bundle
 Gemfile.lock
 pkg/*
+
+# Ignore individual preferences
+.rvmrc
+.rbenv-version
+vendor/bundle/*
