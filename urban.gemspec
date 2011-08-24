@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Urban::VERSION
   s.authors     = ['Thomas Miller']
   s.email       = ['jackerran@gmail.com']
-  s.license     = ['MIT']
+  s.licenses    = ['MIT']
   s.homepage    = 'https://github.com/tmiller/urban'
   s.summary     = %q{A command line tool that interfaces with Urban Dictionary.}
   s.description = %q{Urban is a command line tool that allows you to look up definitions

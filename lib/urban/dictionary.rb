@@ -18,7 +18,7 @@ module Urban
 
   def get_definition(document)
     word = wordize(node_to_s(document.at_css('.word')))
-    definition = definitionize(node_to_s(document.at_css('.definition')))
+    definition = definitionize(node_to_s(document.at_xpath('//td/div[@class="definition"]')))
     return { word: word, definition: definition }
   end
 
