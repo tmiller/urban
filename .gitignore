@@ -15,6 +15,9 @@ Session.vim
 .bundle
 Gemfile.lock
 pkg/*
+.yardoc
+doc/*
+
 
 # Ignore individual preferences
 .rvmrc

@@ -4,4 +4,4 @@ require 'rubygems'
 require 'urban/version'
 require 'urban/cli'
 
-Urban.process
+Urban::CLI.new(ARGV).run
