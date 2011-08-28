@@ -11,7 +11,11 @@ module Urban
 
     # Main entry point to the CLI
     def run
-      true
+      dictionary.define(@options)
+    end
+
+    def dictionary
+      @dictionary ||= Urban::Dictionary.new
     end
 
     # result = args.first ? define(args.join(' ')) : random
@@ -30,12 +34,12 @@ module Urban
         o.separator ''
         o.on('-l', '--list', 'List all definitions') do
           puts opts
-          return nil
+          options.list = true
         end
 
         o.on('-r', '--random', 'Find random word on urban dictionary') do
           puts opts
-          return nil
+          options.random = true
         end
 
         o.on('-h', '--help', 'Show this message') do
@@ -44,15 +48,15 @@ module Urban
         end
 
         o.on('--version', 'Show version') do
-          puts opts.ver
           puts "Urban #{Urban::VERSION} (c) Thomas Miller"
           return nil
         end
 
       end
+
       opts.parse!(args)
+      options.phrase = args.join(' ')
       options
     end
-
   end
 end
