@@ -9,7 +9,6 @@ module Urban
       @options = parse(args)
     end
 
-    # Main entry point to the CLI
     def run
       dictionary.define(@options)
     end
@@ -18,13 +17,7 @@ module Urban
       @dictionary ||= Urban::Dictionary.new
     end
 
-    # result = args.first ? define(args.join(' ')) : random
-
     private
-    # Parse options passed in from the CLI
-    #
-    # @param [Array<String>] args ARGV is the default
-    # @return [Object] options in a struct
     def parse(args)
       options = OpenStruct.new
       opts = OptionParser.new do |o|
