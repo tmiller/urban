@@ -2,7 +2,9 @@ require 'test_helper'
 
 class CLITest < MiniTest::Unit::TestCase
 
-  let(:program) { |args| Urban::CLI.new(args) }
+  def program(*args)
+    Urban::CLI.new(args)
+  end
 
   def assert_cli_prints(expected)
     out, err = capture_io { yield }
@@ -26,12 +28,12 @@ class CLITest < MiniTest::Unit::TestCase
       /-version\s*Show version/
     ]
     assert_cli_prints expectations do
-      program("-h") 
+      program("-h")
     end
   end
 
   def test_parse_prints_version_info
-    assert_cli_prints /^Urban \d+\.\d+\.\d+ \(c\) Thomas Miller$/ do
+    assert_cli_prints(/^Urban \d+\.\d+\.\d+ \(c\) Thomas Miller$/) do
       program("-v")
     end
   end
