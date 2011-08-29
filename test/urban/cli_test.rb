@@ -38,6 +38,13 @@ class CLITest < MiniTest::Unit::TestCase
     end
   end
 
+  def test_no_args_prints_help
+      assert_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) do
+        program
+      end
+  end
+
+
   def test_parse_returns_random
     capture_io do
       actual = program.send(:parse, '-r'.to_args)
@@ -70,4 +77,5 @@ class CLITest < MiniTest::Unit::TestCase
       assert_equal('Cookie monster', actual.phrase)
     end
   end
+
 end

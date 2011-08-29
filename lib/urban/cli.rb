@@ -31,12 +31,12 @@ module Urban
         end
 
         o.on('-r', '--random', 'Find random word on urban dictionary') do
-          puts opts
+          puts o
           options.random = true
         end
 
         o.on('-h', '--help', 'Show this message') do
-          puts opts
+          puts o
           return nil
         end
 
@@ -44,12 +44,16 @@ module Urban
           puts "Urban #{Urban::VERSION} (c) Thomas Miller"
           return nil
         end
-
       end
 
+      if args.empty?
+        puts opts
+        return nil
+      end
       opts.parse!(args)
       options.phrase = args.join(' ')
       options
     end
+
   end
 end
