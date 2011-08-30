@@ -1,5 +1,4 @@
 require 'urban/version'
-
 require 'open-uri'
 require 'nokogiri'
 
@@ -8,21 +7,28 @@ module Urban
 
     URL = 'http://www.urbandictionary.com'
 
-    attr_accessor :api
+    attr_accessor :web_service
 
-    def random
-      get_definition(query(:random))
+    def parse_definitions(document)
+      definitions = document.xpath('//td/div[@class="definition"]').map do |node|
+        node.xpath('//br').each { |br| br.replace(Nokogiri::XML::Text.new("\n", node.document)) };
+        node.content.strip
+      end
+      definitions || []
     end
 
-    def define(options)
-      results = nil
-      case
-        when options.random
-          results = api.query(:random)
-        when options.phrase
-          results = api.query(:define, options.phrase)
-      end
+    def random
+      document = Nokogiri::HTML(web_service.query(:random))
+      word = document.at_css('.word').content.strip
+      definitions = parse_definitions(document)
+      { word: word, definitions: definitions }
+    end
 
+    def define(phrase)
+      document = Nokogiri::HTML(web_service.query(:define, phrase))
+      word = document.at_css('.word').content.strip
+      definitions = parse_definitions(document)
+      { word: word, definitions: definitions }
     end
 
     def get_definition(document)
@@ -48,16 +54,16 @@ module Urban
       return node_set.content.strip.gsub(/\r/, "\n")
     end
 
-    def capitalize(string, pattern)
+    def cweb_servicetalize(string, pattern)
       return string.gsub(pattern, &:upcase).gsub(/\s{2,}/, ' ')
     end
 
     def wordize(string)
-      return capitalize(string, /^\s*\w/)
+      return cweb_servicetalize(string, /^\s*\w/)
     end
 
     def definitionize(string)
-      return capitalize(string, /^\s*\w|\.\s+\w/)
+      return cweb_servicetalize(string, /^\s*\w|\.\s+\w/)
     end
   end
 end

@@ -10,7 +10,7 @@ module Urban
     end
 
     def run
-      dictionary.define(@options)
+      #dictionary.define(@options)
     end
 
     def dictionary
