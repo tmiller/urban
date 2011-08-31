@@ -5,6 +5,12 @@ require 'urban/dictionary'
 module Urban
   class CLI
 
+    attr_accessor :dictionary
+
+    def initialize
+      @dictionary = Urban::Dictionary.new
+    end
+
     def run(args = ARGV)
       options = parse(args)
       case
@@ -12,25 +18,24 @@ module Urban
         return
       when options.random
         results = dictionary.random
-        puts results.word
+        puts "#{results.word}:\n"
         if options.list then
-          results.definitions.each { |definition| puts definition }
+          results.definitions.each { |definition| puts "#{definition}\n" }
         else
           puts results.definitions.first
         end
       when !(options.phrase.nil? || options.phrase.empty?)
-        results = dictionary.define(options.phrase)
-        puts results.word
-        puts results.definitions.first
+        results = dictionary.search(options.phrase)
+        puts "#{results.word}:\n"
+        if options.list then
+          results.definitions.each { |definition| puts "#{definition}\n" }
+        else
+          puts results.definitions.first
+        end
       end
-      puts ''
     end
 
     private
-
-    def dictionary
-      @dictionary ||= Urban::Dictionary.new
-    end
 
     def parse(args)
       options = OpenStruct.new

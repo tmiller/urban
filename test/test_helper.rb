@@ -7,6 +7,7 @@ require 'urban/cli'
 
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 
+
 TEST_PHRASE = OpenStruct.new({
   word: 'impromptu',
   definitions: [
@@ -23,16 +24,19 @@ def load_file(filename)
   contents
 end
 
+def assert_cli_prints(expected)
+  out, err = capture_io { yield }
+
+  if expected.respond_to?(:each)
+    expected.each { |expect| assert_match(expect, out) }
+  else
+    assert_match(expected, out)
+  end
+end
+
 module Stub
   def stub(name, &block)
-    self.class.send(:undef_method, name)
+    self.class.send(:remove_method, name) if respond_to?(name)
     self.class.send(:define_method, name, &block)
   end
 end
-
-class String
-  def to_args
-    self.split(' ')
-  end
-end
-

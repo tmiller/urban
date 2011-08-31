@@ -6,21 +6,23 @@ require 'urban/web'
 module Urban
   class Dictionary
 
+    attr_accessor :web_service
+
+    def initialize
+      @web_service = Urban::Web.new
+    end
+
     def random
-      document = Nokogiri::HTML(web_service.query(:random))
+      document = Nokogiri::HTML(@web_service.query(:random))
       process(document)
     end
 
-    def define(phrase)
-      document = Nokogiri::HTML(web_service.query(:define, phrase))
+    def search(phrase)
+      document = Nokogiri::HTML(@web_service.query(:define, phrase))
       process(document)
     end
 
   private
-
-    def web_service
-      @web_service ||= Urban::Web.new
-    end
 
     def process(document)
       OpenStruct.new({
@@ -35,6 +37,5 @@ module Urban
       end
       definitions || []
     end
-
   end
 end
