@@ -1,7 +1,4 @@
 require 'minitest/autorun'
-require 'ostruct'
-require 'pry'
-require 'redgreen'
 require 'urban'
 require 'urban/cli'
 

@@ -21,8 +21,5 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'nokogiri', '~> 1.5.0'
-  s.add_development_dependency 'ruby-debug19', '~> 0.11.6'
   s.add_development_dependency 'rake', '>= 0.8.7'
-  s.add_development_dependency 'mynyml-redgreen'
-  s.add_development_dependency 'pry'
 end

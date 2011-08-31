@@ -13,35 +13,34 @@ module Urban
 
     def run(args = ARGV)
       options = parse(args)
-      case
-      when options.exit
-        return
-      when options.random
-        results = dictionary.random
-        puts "#{results.word}:\n"
-        if options.list then
-          results.definitions.each { |definition| puts "#{definition}\n" }
-        else
-          puts results.definitions.first
-        end
-      when !(options.phrase.nil? || options.phrase.empty?)
-        results = dictionary.search(options.phrase)
-        puts "#{results.word}:\n"
-        if options.list then
-          results.definitions.each { |definition| puts "#{definition}\n" }
-        else
-          puts results.definitions.first
-        end
+      results = case
+        when options.exit then return
+        when options.random then dictionary.random
+        when exists?(options.phrase) then dictionary.search(options.phrase)
+        else return
       end
+      print(results, options.list)
     end
 
     private
+
+    def print(results, list)
+      puts "#{results.word}:\n"
+      if list
+        results.definitions.each { |definition| puts "#{definition}\n" }
+      else
+        puts results.definitions.first
+      end
+    end
+
+    def exists?(string)
+      !(string.nil? || string.empty?)
+    end
 
     def parse(args)
       options = OpenStruct.new
       options.random = false
       options.list = false
-      options.exit = false
       options.phrase = ''
       opts = OptionParser.new do |o|
         o.banner = "Usage: urban [OPTION]... [PHRASE]"
