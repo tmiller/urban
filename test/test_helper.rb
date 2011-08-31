@@ -1,10 +1,19 @@
+require 'minitest/autorun'
+require 'ostruct'
+require 'pry'
+require 'redgreen'
 require 'urban'
 require 'urban/cli'
-require 'minitest/autorun'
-require 'redgreen'
-require 'pry'
 
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
+
+TEST_PHRASE = OpenStruct.new({
+  word: 'impromptu',
+  definitions: [
+    'Something that is made up on the spot and given little time to gather and present. Usually referring to speeches that are given only a few minutes to prepare for.',
+    'On the spot',
+    'Something that is made up on the spot.  Can also mean a speech that was made with little or no preparation.'
+]})
 
 def load_file(filename)
   contents = ''
@@ -12,6 +21,13 @@ def load_file(filename)
     contents = file.read
   end
   contents
+end
+
+module Stub
+  def stub(name, &block)
+    self.class.send(:undef_method, name)
+    self.class.send(:define_method, name, &block)
+  end
 end
 
 class String

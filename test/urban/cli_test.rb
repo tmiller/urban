@@ -2,8 +2,10 @@ require 'test_helper'
 
 class CLITest < MiniTest::Unit::TestCase
 
-  def program(*args)
-    Urban::CLI.new(args)
+  def program
+    @program ||= instance_eval do
+      (Urban::CLI.new).extend Stub
+    end
   end
 
   def assert_cli_prints(expected)
@@ -28,28 +30,26 @@ class CLITest < MiniTest::Unit::TestCase
       /-version\s*Show version/
     ]
     assert_cli_prints expectations do
-      program("-h")
+      program.run(["-h"])
     end
   end
 
   def test_parse_prints_version_info
     assert_cli_prints(/^Urban \d+\.\d+\.\d+ \(c\) Thomas Miller$/) do
-      program("-v")
+      program.run(["-v"])
     end
   end
 
   def test_no_args_prints_help
       assert_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) do
-        program
+        program.run([])
       end
   end
-
 
   def test_parse_returns_random
     capture_io do
       actual = program.send(:parse, '-r'.to_args)
       assert(actual.random, 'Args -r; Expected true, returned false')
-
       actual = program.send(:parse, '--random'.to_args)
       assert(actual.random, 'Args --random Expected true, returned false')
     end
@@ -59,7 +59,6 @@ class CLITest < MiniTest::Unit::TestCase
     capture_io do
       actual = program.send(:parse, '-l'.to_args)
       assert(actual.list, 'Args: -l; Expected true, returned false')
-
       actual = program.send(:parse, '--list'.to_args)
       assert(actual.list, 'Args: --list; Expected true, returned false')
     end
@@ -67,15 +66,50 @@ class CLITest < MiniTest::Unit::TestCase
 
   def test_parse_returns_phrase
     capture_io do
-
-      # Split strings
       actual = program.send(:parse, 'Cookie monster'.to_args)
       assert_equal('Cookie monster', actual.phrase)
-
-      # One string
       actual = program.send(:parse, ['Cookie monster'])
       assert_equal('Cookie monster', actual.phrase)
     end
+  end
+
+  def test_cli_prints_random_definition
+    dictionary = MiniTest::Mock.new
+    expected = [ TEST_PHRASE.word,
+                 TEST_PHRASE.definitions.first ]
+    capture_io do
+      program.stub(:dictionary) do
+        dictionary.expect(:random, TEST_PHRASE)
+      end
+    end
+    assert_cli_prints(expected) { program.run(['-r']) }
+    dictionary.verify
+  end
+
+  def test_cli_prints_random_definition_list
+    dictionary = MiniTest::Mock.new
+    expected = [ TEST_PHRASE.word,
+                 *TEST_PHRASE.definitions ]
+    capture_io do
+      program.stub(:dictionary) do
+        dictionary.expect(:random, TEST_PHRASE)
+      end
+    end
+    assert_cli_prints(expected) { program.run(['-rl']) }
+    dictionary.verify
+  end
+
+  def test_cli_prints_definition
+    dictionary = MiniTest::Mock.new
+    expected = [ TEST_PHRASE.word,
+                 TEST_PHRASE.definitions.first ]
+    capture_io do
+      program.stub(:dictionary) do
+        dictionary.expect(:define, TEST_PHRASE, 'impromptu')
+      end
+    end
+    assert_cli_prints(expected) { program.run(['impromptu']) }
+    dictionary.verify
   end
 
 end
