@@ -21,14 +21,13 @@ def load_file(filename)
   contents
 end
 
-def assert_cli_prints(expected)
-  out, err = capture_io { yield }
-
-  if expected.respond_to?(:each)
-    expected.each { |expect| assert_match(expect, out) }
-  else
-    assert_match(expected, out)
-  end
+['refute', 'assert'].each do |action|
+  eval <<-EOM
+    def #{action}_cli_prints(matches, &block)
+      out, err = capture_io(&block)
+      [*matches].each { |match| #{action}_match(match, out) }
+    end
+  EOM
 end
 
 module Stub

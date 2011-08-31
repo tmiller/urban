@@ -19,22 +19,27 @@ module Urban
         when exists?(options.phrase) then dictionary.search(options.phrase)
         else return
       end
-      print(results, options.list)
+      output_results(results, options.list)
     end
 
     private
 
-    def print(results, list)
-      puts "#{results.word}:\n"
+    def output_results(results, list)
+      puts "\n#{results.word.upcase}\n\n"
       if list
-        results.definitions.each { |definition| puts "#{definition}\n" }
+        results.definitions.each { |definition| puts "#{definition}\n\n" }
       else
-        puts results.definitions.first
+        puts "#{results.definitions.first}\n\n"
       end
     end
 
     def exists?(string)
       !(string.nil? || string.empty?)
+    end
+
+    def print_and_exit(opts, options)
+      puts opts
+      options.exit = true
     end
 
     def parse(args)
@@ -56,7 +61,6 @@ module Urban
         end
 
         o.on('-h', '--help', 'Show this message') do
-          puts o
           options.exit = true
         end
 
@@ -65,12 +69,14 @@ module Urban
           options.exit = true
         end
       end
-      if args.empty?
+      opts.parse!(args)
+      options.phrase = args.join(' ')
+
+      if (options.exit || !options.random && !exists?(options.phrase))
         puts opts
         options.exit = true
       end
-      opts.parse!(args)
-      options.phrase = args.join(' ')
+
       options
     end
   end

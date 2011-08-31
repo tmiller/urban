@@ -15,21 +15,22 @@ class CLITest < MiniTest::Unit::TestCase
       /-h, --help\s*Show this message/,
       /-version\s*Show version/
     ]
-    assert_cli_prints expectations do
-      @program.run(["-h"])
-    end
+    assert_cli_prints(expectations) { @program.run(["-h"]) }
   end
 
   def test_parse_prints_version_info
-    assert_cli_prints(/^Urban \d+\.\d+\.\d+ \(c\) Thomas Miller$/) do
-      @program.run(["-v"])
-    end
+    args = ['-v']
+    assert_cli_prints(/^Urban \d+\.\d+\.\d+ \(c\) Thomas Miller$/) { @program.run(args) }
   end
 
   def test_no_args_prints_help
-      assert_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) do
-        @program.run([])
-      end
+    args = []
+    assert_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) { @program.run(args) }
+  end
+
+  def test_no_args_with_list_option_prints_help
+    args = ['-l']
+    assert_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) { @program.run(args) }
   end
 
   def test_parse_returns_random
@@ -66,30 +67,34 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_cli_prints_random_definition
-      expected = [ "#{TEST_PHRASE.word}:", TEST_PHRASE.definitions.first ]
+      args = ['-r']
+      expected = [ "#{TEST_PHRASE.word.upcase}", TEST_PHRASE.definitions.first ]
       @program.dictionary = @dictionary.expect(:random, TEST_PHRASE)
-      assert_cli_prints(expected) { @program.run(['-r']) }
+      assert_cli_prints(expected) { @program.run(args) }
       @dictionary.verify
     end
 
     def test_cli_prints_random_definition_list
-      expected = [ "#{TEST_PHRASE.word}:", *TEST_PHRASE.definitions ]
+      args = ['-rl']
+      expected = [ "#{TEST_PHRASE.word.upcase}", *TEST_PHRASE.definitions ]
       @program.dictionary = @dictionary.expect(:random, TEST_PHRASE)
-      assert_cli_prints(expected) { @program.run(['-rl']) }
+      assert_cli_prints(expected) { @program.run(args) }
       @dictionary.verify
     end
 
     def test_cli_prints_definition
-      expected = [ "#{TEST_PHRASE.word}:", TEST_PHRASE.definitions.first ]
+      args = ['impromptu']
+      expected = [ "#{TEST_PHRASE.word.upcase}", TEST_PHRASE.definitions.first ]
       @program.dictionary = @dictionary.expect(:search, TEST_PHRASE, ['impromptu'])
       assert_cli_prints(expected) { @program.run(['impromptu']) }
       @dictionary.verify
     end
 
     def test_cli_prints_definition_list
-      expected = [ "#{TEST_PHRASE.word}:", *TEST_PHRASE.definitions ]
+      args = ['-l', 'impromptu']
+      expected = [ "#{TEST_PHRASE.word.upcase}", *TEST_PHRASE.definitions ]
       @program.dictionary = @dictionary.expect(:search, TEST_PHRASE, ['impromptu'])
-      assert_cli_prints(expected) { @program.run(['-l', 'impromptu']) }
+      assert_cli_prints(expected) { @program.run(args) }
       @dictionary.verify
     end
   end
