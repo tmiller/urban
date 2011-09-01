@@ -1,9 +1,8 @@
+$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
+
 require 'minitest/autorun'
 require 'urban'
 require 'urban/cli'
-
-$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
-
 
 TEST_PHRASE = OpenStruct.new({
   word: 'impromptu',
@@ -14,11 +13,7 @@ TEST_PHRASE = OpenStruct.new({
 ]})
 
 def load_file(filename)
-  contents = ''
-  File.open(File.expand_path("../data/#{filename}", __FILE__)) do |file|
-    contents = file.read
-  end
-  contents
+  IO.read(File.expand_path("../data/#{filename}", __FILE__))
 end
 
 ['refute', 'assert'].each do |action|
