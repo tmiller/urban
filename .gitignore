@@ -17,6 +17,7 @@ Gemfile.lock
 pkg/*
 .yardoc
 doc/*
+coverage/*
 
 
 # Ignore individual preferences
