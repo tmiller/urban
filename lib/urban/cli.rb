@@ -16,8 +16,7 @@ module Urban
       results = case
         when options.exit then return
         when options.random then dictionary.random
-        when exists?(options.phrase) then dictionary.search(options.phrase)
-        else return
+        when !options.phrase.empty? then dictionary.search(options.phrase)
       end
       output_results(results, options.list)
     end
@@ -31,15 +30,6 @@ module Urban
       else
         puts "#{results.definitions.first}\n\n"
       end
-    end
-
-    def exists?(string)
-      !(string.nil? || string.empty?)
-    end
-
-    def print_and_exit(opts, options)
-      puts opts
-      options.exit = true
     end
 
     def parse(args)
@@ -72,7 +62,7 @@ module Urban
       opts.parse!(args)
       options.phrase = args.join(' ')
 
-      if (options.exit || !options.random && !exists?(options.phrase))
+      if (options.exit || !options.random && options.phrase.empty?)
         puts opts
         options.exit = true
       end
