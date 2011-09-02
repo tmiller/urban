@@ -8,7 +8,7 @@ random definition from {Urban Dictionary}[http://www.urbandictionary.com].
 
 == Requirements
 
-* >= Ruby 1.9.2-p290
+* >= Ruby 1.9.2-180
 
 == Installation
 
@@ -28,16 +28,24 @@ With git and local working copy
 
     $ urban cookie monster
 
-=== 2. Random word
+=== 2. Random definition
 
-    $ urban
+    $ urban -r
 
+=== 3. Print all definitons
+
+    $ urban -l cookie monster
+
+=== 4. Print help and version
+
+    $ urban --help
+    $ urban --version
+    
 == To Do
 
-* Write Tests
 * Document with {YARD}[http://yardoc.org]
-* Implement -l switch to list all definitions
-* Implement -h --help switch to output usage information
+* Print better looking output
+* Test problem words below with new parser
 
 == Test words for formatting
 
