@@ -43,6 +43,7 @@ With git and local working copy
     
 == To Do
 
+* Refactor cli.rb
 * Document with {YARD}[http://yardoc.org]
 * Print better looking output
 * Test problem words below with new parser
