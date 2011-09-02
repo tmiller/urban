@@ -23,7 +23,6 @@ module Urban
     end
 
   private
-
     def process(document)
       OpenStruct.new({
         word: document.at_xpath('//td[@class="word"][1]').content.strip,
@@ -34,8 +33,7 @@ module Urban
       definitions = document.xpath('//td/div[@class="definition"]').map do |node|
         node.xpath('//br').each { |br| br.replace(Nokogiri::XML::Text.new("\n", node.document)) };
         node.content.strip
-      end
-      definitions || []
+      end || []
     end
   end
 end
