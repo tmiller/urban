@@ -46,16 +46,5 @@ With git and local working copy
 * Refactor cli.rb
 * Document with {YARD}[http://yardoc.org]
 * Print better looking output
-* Test problem words below with new parser
-
-== Test words for formatting
-
-The first definitions on these words were show to
-have problems displaying in the terminal. They are to be used to write tests.
-
-* {mina}[http://www.urbandictionary.com/define.php?term=minal]
-* {ugly-hot}[http://www.urbandictionary.com/define.php?term=ugly-hot]
-* {bolen}[http://www.urbandictionary.com/define.php?term=bolen]
-* {chinalian}[http://www.urbandictionary.com/define.php?term=chinalian]
 
 Copyright (c) 2011 Thomas Miller. See LICENSE for details.
