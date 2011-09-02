@@ -47,4 +47,6 @@ With git and local working copy
 * Document with {YARD}[http://yardoc.org]
 * Print better looking output
 
+---
+
 Copyright (c) 2011 Thomas Miller. See LICENSE for details.
