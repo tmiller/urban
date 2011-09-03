@@ -8,7 +8,7 @@ random definition from {Urban Dictionary}[http://www.urbandictionary.com].
 
 == Requirements
 
-* >= Ruby 1.9.2-180
+* Ruby >= 1.8.6
 
 == Installation
 
