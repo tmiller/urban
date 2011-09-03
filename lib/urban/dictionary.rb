@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'nokogiri'
 require 'ostruct'
 require 'urban/version'
@@ -25,8 +26,8 @@ module Urban
   private
     def process(document)
       OpenStruct.new({
-        word: document.at_xpath('//td[@class="word"][1]').content.strip,
-        definitions: parse_definitions(document) })
+        :word => document.at_xpath('//td[@class="word"][1]').content.strip,
+        :definitions => parse_definitions(document) })
     end
 
     def parse_definitions(document)
