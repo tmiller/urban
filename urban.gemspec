@@ -10,8 +10,7 @@ Gem::Specification.new do |s|
   s.licenses    = ['MIT']
   s.homepage    = 'https://github.com/tmiller/urban'
   s.summary     = %q{A command line tool that interfaces with Urban Dictionary.}
-  s.description = %q{Urban is a command line tool that allows you to look up definitions
-                     or pull a random definition from Urban Dictionary.}
+  s.description = %q{Urban is a command line tool that allows you to look up definitions or pull a random definition from Urban Dictionary.}
 
   s.rubyforge_project = 'urban'
 
