@@ -68,7 +68,7 @@ class CLITest < MiniTest::Unit::TestCase
 
     def test_cli_prints_random_definition
       args = ['-r']
-      expected = [ "#{TEST_PHRASE.word.upcase}", TEST_PHRASE.definitions.first ]
+      expected = [ "#{TEST_PHRASE[:word].upcase}", TEST_PHRASE[:definitions].first ]
       @program.dictionary = @dictionary.expect(:random, TEST_PHRASE)
       assert_cli_prints(expected) { @program.run(args) }
       @dictionary.verify
@@ -76,7 +76,7 @@ class CLITest < MiniTest::Unit::TestCase
 
     def test_cli_prints_random_definition_list
       args = ['-rl']
-      expected = [ "#{TEST_PHRASE.word.upcase}", *TEST_PHRASE.definitions ]
+      expected = [ "#{TEST_PHRASE[:word].upcase}", *TEST_PHRASE[:definitions] ]
       @program.dictionary = @dictionary.expect(:random, TEST_PHRASE)
       assert_cli_prints(expected) { @program.run(args) }
       @dictionary.verify
@@ -84,7 +84,7 @@ class CLITest < MiniTest::Unit::TestCase
 
     def test_cli_prints_definition
       args = ['impromptu']
-      expected = [ "#{TEST_PHRASE.word.upcase}", TEST_PHRASE.definitions.first ]
+      expected = [ "#{TEST_PHRASE[:word].upcase}", TEST_PHRASE[:definitions].first ]
       @program.dictionary = @dictionary.expect(:search, TEST_PHRASE, ['impromptu'])
       assert_cli_prints(expected) { @program.run(['impromptu']) }
       @dictionary.verify
@@ -92,7 +92,7 @@ class CLITest < MiniTest::Unit::TestCase
 
     def test_cli_prints_definition_list
       args = ['-l', 'impromptu']
-      expected = [ "#{TEST_PHRASE.word.upcase}", *TEST_PHRASE.definitions ]
+      expected = [ "#{TEST_PHRASE[:word].upcase}", *TEST_PHRASE[:definitions] ]
       @program.dictionary = @dictionary.expect(:search, TEST_PHRASE, ['impromptu'])
       assert_cli_prints(expected) { @program.run(args) }
       @dictionary.verify
