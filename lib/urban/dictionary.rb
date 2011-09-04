@@ -13,17 +13,16 @@ module Urban
     end
 
     def random
-      document = Nokogiri::HTML(@web_service.query(:random))
-      process(document)
+      process(@web_service.query(:random))
     end
 
     def search(phrase)
-      document = Nokogiri::HTML(@web_service.query(:define, phrase))
-      process(document)
+      process(@web_service.query(:define, phrase))
     end
 
   private
-    def process(document)
+    def process(raw_html)
+      document = Nokogiri::HTML(raw_html)
       Entry.new(document.at_xpath('//td[@class="word"][1]').content.strip,
                 parse_definitions(document))
     end

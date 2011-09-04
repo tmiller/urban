@@ -5,9 +5,10 @@
   * minor enhancements:
 
     * Add this history file
-    * Replace OpenStruct in Urban::Dictionary with plain Struct
     * Remove require 'rubygems' from program and lib
     * Test now only stubs singleton instead of class
     * Use ~> instead of >= on dependencies
+    * Replace OpenStruct in Urban::Dictionary with plain Struct
+    * Move Nokogiri call to Dictionary#process
 
   * bug fix:

@@ -7,6 +7,11 @@ class DictionaryTest < MiniTest::Unit::TestCase
     @dictionary = Urban::Dictionary.new
   end
 
+  def test_process_extracts_elements_from_html
+    entry = @dictionary.send(:process, load_file('impromptu.html'))
+    assert_equal(TEST_PHRASE, entry)
+  end
+
   def test_dictionary_calls_random
     @dictionary.web_service = @web_service.expect(:query, load_file('impromptu.html') ,[:random])
     assert_equal(TEST_PHRASE, @dictionary.random)
