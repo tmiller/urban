@@ -24,11 +24,11 @@ module Urban
     private
 
     def output_results(results, list)
-      puts "\n#{results[:word].upcase}\n\n"
+      puts "\n#{results.word.upcase}\n\n"
       if list
-        results[:definitions].each { |definition| puts "#{definition}\n\n" }
+        results.definitions.each { |definition| puts "#{definition}\n\n" }
       else
-        puts "#{results[:definitions].first}\n\n"
+        puts "#{results.definitions.first}\n\n"
       end
     end
 

@@ -5,6 +5,7 @@ require 'urban/web'
 module Urban
   class Dictionary
 
+    Entry = Struct.new(:word, :definitions)
     attr_accessor :web_service
 
     def initialize
@@ -23,8 +24,8 @@ module Urban
 
   private
     def process(document)
-      { :word => document.at_xpath('//td[@class="word"][1]').content.strip,
-        :definitions => parse_definitions(document) }
+      Entry.new(document.at_xpath('//td[@class="word"][1]').content.strip,
+                parse_definitions(document))
     end
 
     def parse_definitions(document)
