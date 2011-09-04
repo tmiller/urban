@@ -13,6 +13,7 @@ Session.vim
 # Project
 *.gem
 .bundle
+Gemfile.lock
 pkg/*
 .yardoc
 doc/*
