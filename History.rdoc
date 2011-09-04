@@ -12,3 +12,5 @@
     * Move Nokogiri call to Dictionary#process
 
   * bug fix:
+
+    * Passing -v or --version no longer prints help
