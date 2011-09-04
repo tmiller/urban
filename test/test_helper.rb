@@ -28,7 +28,7 @@ end
 
 module Stub
   def stub(name, &block)
-    self.class.send(:remove_method, name) if respond_to?(name)
-    self.class.send(:define_method, name, &block)
+    singleton_class = class << self; self; end
+    singleton_class.send(:define_method, name, &block)
   end
 end
