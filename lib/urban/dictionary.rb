@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'nokogiri'
 require 'urban/version'
 require 'urban/web'
