@@ -54,16 +54,16 @@ module Urban
           options.exit = true
         end
 
-        o.on('--version', 'Show version') do
+        o.on('-v', '--version', 'Show version') do
           puts "Urban #{Urban::VERSION} (c) Thomas Miller"
-          options.exit = true
+          options.version = true
         end
       end
       opts.parse!(args)
       options.phrase = args.join(' ')
 
-      if (options.exit || !options.random && options.phrase.empty?)
-        puts opts
+      if (options.exit || options.version || !options.random && options.phrase.empty?)
+        puts opts unless options.version
         options.exit = true
       end
 

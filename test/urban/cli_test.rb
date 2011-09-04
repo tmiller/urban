@@ -19,8 +19,17 @@ class CLITest < MiniTest::Unit::TestCase
   end
 
   def test_parse_prints_version_info
+    args = ['--version']
+    assert_cli_prints(/^Urban \d+\.\d+\.\d+ \(c\) Thomas Miller$/) { @program.run(args) }
     args = ['-v']
     assert_cli_prints(/^Urban \d+\.\d+\.\d+ \(c\) Thomas Miller$/) { @program.run(args) }
+  end
+
+  def test_parse_does_not_print_help_with_version_info
+    args = ['--version']
+    refute_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) { @program.run(args) }
+    args = ['-v']
+    refute_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) { @program.run(args) }
   end
 
   def test_no_args_prints_help
@@ -30,6 +39,8 @@ class CLITest < MiniTest::Unit::TestCase
 
   def test_no_args_with_list_option_prints_help
     args = ['-l']
+    assert_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) { @program.run(args) }
+    args = ['--list']
     assert_cli_prints(/Usage: urban \[OPTION\]\.\.\. \[PHRASE\]/) { @program.run(args) }
   end
 
