@@ -3,10 +3,12 @@
   * major enhancements:
 
     * Change --list flag to --all for more clarity
+    * Remove query from Urban::Web replace with random and search
 
   * minor enhancements:
 
     * Add this history file
+    * Add Urban::Web#fetch for fetching pages from urban dictionary
     * Add examples to help
     * Remove require 'rubygems' from program and lib
     * Test now only stubs singleton instead of class

@@ -2,12 +2,21 @@ require 'open-uri'
 require 'urban/version'
 
 module Urban
-  class Web
+  module Web
+
     URL = 'http://www.urbandictionary.com'
 
-    def query(type, word = nil)
-      query = "#{type.to_s}.php" << (word ? "?term=#{word}" : '')
-      open(escape_uri("#{URL}/#{query}"))
+    def search(phrase)
+      fetch "define.php", :term => phrase
+    end
+
+    def random
+      fetch "random.php"
+    end
+
+    def fetch(page, parameters = {})
+      params = '?' +  parameters.map { |k,v| "#{k}=#{v}" }.join('&') unless parameters.empty?
+      open(escape_uri("#{URL}/#{page}#{params}"))
     end
 
   private
