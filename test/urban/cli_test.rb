@@ -7,11 +7,21 @@ class CLITest < MiniTest::Unit::TestCase
 Usage: urban [OPTION]... [PHRASE]
 Search http://urbandictionary.com for definitions
 
-Options
+Options:
     -l, --list                       List all definitions
     -r, --random                     Find random word on urban dictionary
     -h, --help                       Show this message
     -v, --version                    Show version
+
+Examples:
+    urban cookie monster        Search for "cookie monster" and print its
+                                first definition
+    urban -l cookie monster     Search for "cookie monster" and print all of
+                                its available definitions
+    urban -r                    Print a random phrase and its first definition
+    urban -rl                   Print a random prhase and all of its available
+                                definitions
+
 EOS
 
   def setup

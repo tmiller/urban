@@ -43,10 +43,13 @@ module Urban
       options.random = options.list = options.version = options.help = false
 
       opts = OptionParser.new do |o|
-        o.banner = %Q{Usage: urban [OPTION]... [PHRASE]
-                      Search http://urbandictionary.com for definitions}.gsub(/\n\s*/, "\n")
+        o.banner = <<-EOB
+Usage: urban [OPTION]... [PHRASE]
+Search http://urbandictionary.com for definitions
 
-        o.separator "\nOptions"
+        EOB
+
+        o.separator "Options:"
         o.on('-l', '--list', 'List all definitions') do
           options.list = true
         end
@@ -63,9 +66,22 @@ module Urban
           options.version = true
         end
       end
+
+      examples = <<-EOE
+
+Examples:
+    urban cookie monster        Search for "cookie monster" and print its
+                                first definition
+    urban -l cookie monster     Search for "cookie monster" and print all of
+                                its available definitions
+    urban -r                    Print a random phrase and its first definition
+    urban -rl                   Print a random prhase and all of its available
+                                definitions
+
+      EOE
       opts.parse!(args)
       options.phrase = args.join(' ')
-      options.help_screen = opts
+      options.help_screen = opts.help + examples
       options
     end
   end

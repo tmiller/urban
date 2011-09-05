@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 
 require 'rubygems'
+gem 'minitest' if RUBY_VERSION > '1.9'
 require 'minitest/autorun'
 require 'urban'
 require 'urban/cli'

@@ -41,7 +41,7 @@ With git and local working copy
 
     $ urban --help
     $ urban --version
-    
+
 == To Do
 
 * Add test and code for exception handling (especially 404's)
