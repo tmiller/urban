@@ -13,35 +13,40 @@ module Urban
 
     def run(args = ARGV)
       options = parse(args)
-      results = case
-        when options.exit then return
-        when options.random then dictionary.random
-        when !options.phrase.empty? then dictionary.search(options.phrase)
+      output = case
+        when options.help           ; options.help_screen
+        when options.version        ; "Urban #{Urban::VERSION} (c) Thomas Miller"
+        when options.random         ; dictionary.random
+        when !options.phrase.empty? ; dictionary.search(options.phrase)
+        else                        ; options.help_screen
       end
-      output_results(results, options.list)
+      if output.respond_to?(:word)
+        print_entry(output, options.list)
+      else
+        puts output
+      end
     end
 
     private
 
-    def output_results(results, list)
-      puts "\n#{results.word.upcase}\n\n"
+    def print_entry(entry, list)
+      puts "\n#{entry.word.upcase}\n\n"
       if list
-        results.definitions.each { |definition| puts "#{definition}\n\n" }
+        entry.definitions.each { |definition| puts "#{definition}\n\n" }
       else
-        puts "#{results.definitions.first}\n\n"
+        puts "#{entry.definitions.first}\n\n"
       end
     end
 
     def parse(args)
       options = OpenStruct.new
-      options.random = false
-      options.list = false
-      options.phrase = ''
-      opts = OptionParser.new do |o|
-        o.banner = "Usage: urban [OPTION]... [PHRASE]"
-        o.separator "Search http://urbandictionary.com for definitions"
+      options.random = options.list = options.version = options.help = false
 
-        o.separator ''
+      opts = OptionParser.new do |o|
+        o.banner = %Q{Usage: urban [OPTION]... [PHRASE]
+                      Search http://urbandictionary.com for definitions}.gsub(/\n\s*/, "\n")
+
+        o.separator "\nOptions"
         o.on('-l', '--list', 'List all definitions') do
           options.list = true
         end
@@ -51,22 +56,16 @@ module Urban
         end
 
         o.on('-h', '--help', 'Show this message') do
-          options.exit = true
+          options.help = true
         end
 
         o.on('-v', '--version', 'Show version') do
-          puts "Urban #{Urban::VERSION} (c) Thomas Miller"
           options.version = true
         end
       end
       opts.parse!(args)
       options.phrase = args.join(' ')
-
-      if (options.exit || options.version || !options.random && options.phrase.empty?)
-        puts opts unless options.version
-        options.exit = true
-      end
-
+      options.help_screen = opts
       options
     end
   end
