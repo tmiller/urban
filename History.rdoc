@@ -5,6 +5,7 @@
   * minor enhancements:
 
     * Add this history file
+    * Add examples to help
     * Remove require 'rubygems' from program and lib
     * Test now only stubs singleton instead of class
     * Use ~> instead of >= on dependencies
