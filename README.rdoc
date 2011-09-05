@@ -44,7 +44,7 @@ With git and local working copy
     
 == To Do
 
-* Refactor cli.rb
+* Add test and code for exception handling (especially 404's)
 * Document with {YARD}[http://yardoc.org]
 * Print better looking output
 
