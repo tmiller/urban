@@ -21,7 +21,7 @@ module Urban
         else                        ; options.help_screen
       end
       if output.respond_to?(:word)
-        print_entry(output, options.list)
+        print_entry(output, options.all)
       else
         puts output
       end
@@ -29,9 +29,9 @@ module Urban
 
     private
 
-    def print_entry(entry, list)
+    def print_entry(entry, display_all)
       puts "\n#{entry.word.upcase}\n\n"
-      if list
+      if display_all
         entry.definitions.each { |definition| puts "#{definition}\n\n" }
       else
         puts "#{entry.definitions.first}\n\n"
@@ -40,21 +40,21 @@ module Urban
 
     def parse(args)
       options = OpenStruct.new
-      options.random = options.list = options.version = options.help = false
+      options.random = options.all = options.version = options.help = false
 
       opts = OptionParser.new do |o|
         o.banner = <<-EOB
 Usage: urban [OPTION]... [PHRASE]
-Search http://urbandictionary.com for definitions
+Search http://urbandictionary.com for definitions of phrases
 
         EOB
 
         o.separator "Options:"
-        o.on('-l', '--list', 'List all definitions') do
-          options.list = true
+        o.on('-a', '--all', 'List all definitions') do
+          options.all = true
         end
 
-        o.on('-r', '--random', 'Find random word on urban dictionary') do
+        o.on('-r', '--random', 'Return a random phrase and definition') do
           options.random = true
         end
 
@@ -62,7 +62,7 @@ Search http://urbandictionary.com for definitions
           options.help = true
         end
 
-        o.on('-v', '--version', 'Show version') do
+        o.on('-v', '--version', 'Show version information') do
           options.version = true
         end
       end
@@ -72,10 +72,10 @@ Search http://urbandictionary.com for definitions
 Examples:
     urban cookie monster        Search for "cookie monster" and print its
                                 first definition
-    urban -l cookie monster     Search for "cookie monster" and print all of
+    urban -a cookie monster     Search for "cookie monster" and print all of
                                 its available definitions
     urban -r                    Print a random phrase and its first definition
-    urban -rl                   Print a random prhase and all of its available
+    urban -ra                   Print a random phrase and all of its available
                                 definitions
 
       EOE

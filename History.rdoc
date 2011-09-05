@@ -1,6 +1,8 @@
-=== 0.1.4
+=== 1.0.0
 
   * major enhancements:
+
+    * Change --list flag to --all for more clarity
 
   * minor enhancements:
 

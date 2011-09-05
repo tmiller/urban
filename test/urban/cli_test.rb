@@ -5,21 +5,21 @@ class CLITest < MiniTest::Unit::TestCase
 
   HELP_SCREEN = <<-EOS
 Usage: urban [OPTION]... [PHRASE]
-Search http://urbandictionary.com for definitions
+Search http://urbandictionary.com for definitions of phrases
 
 Options:
-    -l, --list                       List all definitions
-    -r, --random                     Find random word on urban dictionary
+    -a, --all                        List all definitions
+    -r, --random                     Return a random phrase and definition
     -h, --help                       Show this message
-    -v, --version                    Show version
+    -v, --version                    Show version information
 
 Examples:
     urban cookie monster        Search for "cookie monster" and print its
                                 first definition
-    urban -l cookie monster     Search for "cookie monster" and print all of
+    urban -a cookie monster     Search for "cookie monster" and print all of
                                 its available definitions
     urban -r                    Print a random phrase and its first definition
-    urban -rl                   Print a random prhase and all of its available
+    urban -ra                   Print a random phrase and all of its available
                                 definitions
 
 EOS
@@ -45,7 +45,7 @@ EOS
         assert_equal(false, options.help)
         assert_equal(false, options.version)
         assert_equal(false, options.random)
-        assert_equal(false, options.list)
+        assert_equal(false, options.all)
         assert_equal('', options.phrase)
       end
     end
@@ -75,9 +75,9 @@ EOS
       end
     end
 
-    def test_list_flag
+    def test_all_flag
       assert_silent do
-        assert_flag_is_set('list')
+        assert_flag_is_set('all')
       end
     end
   end
@@ -119,7 +119,7 @@ EOS
 
     def test_random_and_list_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      argument_variations = ['-rl', '-r -l', '--random -l', '-r --list', '--list --random']
+      argument_variations = ['-ra', '-r -a', '--random -a', '-r --all', '--all --random']
       assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
       @dictionary.verify
     end
@@ -133,7 +133,7 @@ EOS
 
     def test_phrase_and_list_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
-      argument_variations = ['impromptu -l', '--list impromptu']
+      argument_variations = ['impromptu -a', '--all impromptu']
       assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
       @dictionary.verify
     end
