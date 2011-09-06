@@ -5,6 +5,9 @@ gem 'minitest' if RUBY_VERSION > '1.9'
 require 'minitest/autorun'
 require 'urban'
 require 'urban/cli'
+require 'red_green'
+
+MiniTest::Unit.output = RedGreen.new(MiniTest::Unit.output)
 
 TEST_ENTRY = Urban::Dictionary::Entry.new( 'impromptu',
   [ 'Something that is made up on the spot and given little time to gather and present. Usually referring to speeches that are given only a few minutes to prepare for.',
