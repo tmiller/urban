@@ -1,5 +1,3 @@
-require 'minitest/unit'
-
 class MiniTest::RedGreen
   ESC = "\e["
   NND = "#{ESC}0m"
