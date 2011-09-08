@@ -3,6 +3,7 @@ require 'urban/version'
 
 module Urban
   module Web
+    extend self
 
     URL = 'http://www.urbandictionary.com'
 

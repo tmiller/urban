@@ -21,7 +21,7 @@ module Urban
         else                        ; options.help_screen
       end
       if output.respond_to?(:word)
-        print_entry(output, options.all)
+        print_entry(output, options)
       else
         puts output
       end
@@ -29,9 +29,10 @@ module Urban
 
     private
 
-    def print_entry(entry, display_all)
+    def print_entry(entry, options)
+      puts "WARNING: --list and -l are deprecated please use --all or -a instead" if options.list
       puts "\n#{entry.word.upcase}\n\n"
-      if display_all
+      if options.all
         entry.definitions.each { |definition| puts "#{definition}\n\n" }
       else
         puts "#{entry.definitions.first}\n\n"
@@ -64,6 +65,11 @@ Search http://urbandictionary.com for definitions of phrases
 
         o.on('-v', '--version', 'Show version information') do
           options.version = true
+        end
+
+        o.on('-l', '--list', 'DEPRECATED please use --all or -a instead') do
+          options.list = true
+          options.all = true
         end
       end
 

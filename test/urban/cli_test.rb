@@ -12,6 +12,7 @@ Options:
     -r, --random                     Return a random phrase and definition
     -h, --help                       Show this message
     -v, --version                    Show version information
+    -l, --list                       DEPRECATED please use --all or -a instead
 
 Examples:
     urban cookie monster        Search for "cookie monster" and print its
@@ -117,7 +118,7 @@ EOS
       @dictionary.verify
     end
 
-    def test_random_and_list_flag_prints_multiple_definitions
+    def test_random_and_all_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
       argument_variations = ['-ra', '-r -a', '--random -a', '-r --all', '--all --random']
       assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
@@ -131,11 +132,21 @@ EOS
       @dictionary.verify
     end
 
-    def test_phrase_and_list_flag_prints_multiple_definitions
+    def test_phrase_and_all_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
       argument_variations = ['impromptu -a', '--all impromptu']
       assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
       @dictionary.verify
+    end
+
+    def test_list_flag_prints_deprecation_warning
+      expected = /WARNING: --list and -l are deprecated please use --all or -a instead/
+      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
+      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
+      stdout, stederr = capture_io { @program.run(Shellwords.shellwords('--list impromptu')) }
+      assert_match expected, stdout
+      stdou, stederr  = capture_io { @program.run(Shellwords.shellwords('-rl')) }
+      assert_match expected, stdout
     end
   end
 end
