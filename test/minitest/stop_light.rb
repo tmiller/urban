@@ -1,4 +1,4 @@
-class MiniTest::RedGreen
+class MiniTest::StopLight
   ESC = "\e["
   NND = "#{ESC}0m"
 
@@ -13,7 +13,7 @@ class MiniTest::RedGreen
   end
 
   def yellow str
-    bright_color(33, str)
+    normal_color(33, str)
   end
 
   def green str
@@ -22,10 +22,6 @@ class MiniTest::RedGreen
 
   def normal_color(color_code, str)
    "#{ESC}#{color_code}m#{str}#{NND}"
-  end
-
-  def bright_color(color_code, str)
-   "#{ESC}01;#{color_code}m#{str}#{NND}"
   end
 
   def print(o)
@@ -42,6 +38,8 @@ class MiniTest::RedGreen
       case str
         when /Failure:/, /Error:/, /[1-9]+ failures/, /[1-9]+ errors/;
           red(str)
+        when /Skipped:/
+          yellow(str)
         when /0 failures, 0 errors/;
           green(str).gsub(/([1-9]+ skips)/, yellow('\1'))
         else;
@@ -56,4 +54,4 @@ class MiniTest::RedGreen
   end
 end
 
-MiniTest::Unit.output = MiniTest::RedGreen.new(MiniTest::Unit.output)
+MiniTest::Unit.output = MiniTest::StopLight.new(MiniTest::Unit.output)

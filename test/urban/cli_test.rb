@@ -95,6 +95,7 @@ EOS
 
     # Helpers
     def assert_program_output(argument_variations, stdout=nil, stderr=nil)
+      skip
       argument_variations.each do |args|
         assert_output(stdout, stderr) { @program.run(Shellwords.shellwords(args)) }
       end
