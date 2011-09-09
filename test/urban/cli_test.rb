@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'open-uri'
 require 'shellwords'
 
 class CLITest < MiniTest::Unit::TestCase
@@ -95,7 +96,6 @@ EOS
 
     # Helpers
     def assert_program_output(argument_variations, stdout=nil, stderr=nil)
-      skip
       argument_variations.each do |args|
         assert_output(stdout, stderr) { @program.run(Shellwords.shellwords(args)) }
       end
@@ -150,4 +150,8 @@ EOS
       assert_match expected, stdout
     end
   end
+
+  class CLIRunnerErrorOutputTest < CLITest
+  end
+
 end

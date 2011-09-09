@@ -6,8 +6,8 @@ module Urban
   module Dictionary
     extend self
 
-    Entry = Struct.new(:word, :definitions)
-    attr_accessor :web_service
+    Entry = Struct.new(:status, :word, :definitions, :source)
+    attr_writer :web_service
 
     def random
       process(web_service.random)
@@ -23,10 +23,12 @@ module Urban
 
   private
 
-    def process(raw_html)
-      document = Nokogiri::HTML(raw_html)
-      Entry.new(document.at_xpath('//td[@class="word"][1]').content.strip,
-                parse_definitions(document))
+    def process(response)
+      document = Nokogiri::HTML(response.stream)
+      Entry.new(:success,
+                document.at_xpath('//td[@class="word"][1]').content.strip,
+                parse_definitions(document),
+                response.url)
     end
 
     def parse_definitions(document)

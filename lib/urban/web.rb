@@ -5,14 +5,18 @@ module Urban
   module Web
     extend self
 
+    Response = Struct.new(:url, :stream)
+
     URL = 'http://www.urbandictionary.com'
 
     def search(phrase)
-      fetch "define.php", :term => phrase
+      result = fetch "define.php", :term => phrase
+      Response.new(result.base_uri.to_s, result)
     end
 
     def random
-      fetch "random.php"
+      result = fetch "random.php"
+      Response.new(result.base_uri.to_s, result)
     end
 
     def fetch(page, parameters = {})
