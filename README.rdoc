@@ -1,5 +1,5 @@
 = Urban
-{https://secure.travis-ci.org/tmiller/urban.png}[http://travis-ci.org/tmiller/urban]
+{<img src="https://secure.travis-ci.org/tmiller/urban.png"/>}[http://travis-ci.org/tmiller/urban]
 
 Urban is a command line tool that allows you to look up definitions or pull a
 random definition from {Urban Dictionary}[http://www.urbandictionary.com].
