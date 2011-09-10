@@ -178,6 +178,10 @@ EOS
 
     ERROR_MISSING_PHRASE = "Error: No definitions found for #{EMPTY_ENTRY.phrase.upcase}\n"
     ERROR_NO_INTERNET = "Error: Could not find an internet connection\n"
+    ERROR_INVALID_OPTION = <<-EOE
+urban: invalid option: -b
+Try `urban --help' for more information.
+    EOE
 
     def setup
       super
@@ -196,6 +200,13 @@ EOS
       dictionary.stub(:search) { |phrase| raise SocketError }
       @program.dictionary = dictionary
       assert_program_output(['gubble'], nil, ERROR_NO_INTERNET)
+    end
+
+    def test_invalid_option_prints_help
+      dictionary = (Object.new).extend Stub
+      dictionary.stub(:search) { |phrase| raise OptionParser::InvalidOption }
+      @program.dictionary = dictionary
+      assert_program_output(['-b'], nil, ERROR_INVALID_OPTION)
     end
   end
 end

@@ -1,5 +1,6 @@
 require 'optparse'
 require 'ostruct'
+require 'socket'
 require 'urban/dictionary'
 
 module Urban
@@ -12,8 +13,8 @@ module Urban
     end
 
     def run(args = ARGV)
-      options = parse(args)
       begin
+        options = parse(args)
         output = case
           when options.help           ; options.help_screen
           when options.version        ; "Urban #{Urban::VERSION} (c) Thomas Miller"
@@ -33,9 +34,11 @@ module Urban
         end
 
       rescue SocketError
-          $stderr.puts 'Error: Could not find an internet connection'
+        $stderr.puts 'Error: Could not find an internet connection'
+      rescue OptionParser::InvalidOption => e
+        $stderr.puts "urban: #{e.message}\nTry `urban --help' for more information."
       rescue Exception => e
-          $stderr.puts e.message
+        $stderr.puts e.message
       end
     end
 
