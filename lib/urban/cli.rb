@@ -13,24 +13,34 @@ module Urban
 
     def run(args = ARGV)
       options = parse(args)
-      output = case
-        when options.help           ; options.help_screen
-        when options.version        ; "Urban #{Urban::VERSION} (c) Thomas Miller"
-        when options.random         ; dictionary.random
-        when !options.phrase.empty? ; dictionary.search(options.phrase)
-        else                        ; options.help_screen
-      end
-      if output.respond_to?(:word)
-        output.definitions ? print_entry(output, options) : print_error(output)
-      else
-        puts output
+      begin
+        output = case
+          when options.help           ; options.help_screen
+          when options.version        ; "Urban #{Urban::VERSION} (c) Thomas Miller"
+          when options.random         ; dictionary.random
+          when !options.phrase.empty? ; dictionary.search(options.phrase)
+          else                        ; options.help_screen
+        end
+
+        if output.respond_to?(:word)
+          if output.definitions
+            print_entry(output, options)
+          else
+            $stderr.puts 'Error: No definitions found for ' + entry.word.upcase
+          end
+        else
+          puts output
+        end
+      rescue SocketError
+          $stderr.puts 'Error: Could not find an internet connection'
+      rescue Exception => e
+          $stderr.puts e.message
       end
     end
 
     private
 
     def print_error(entry)
-      $stderr.puts 'Error: No definitions found for ' + entry.word.upcase
     end
 
     def print_entry(entry, options)

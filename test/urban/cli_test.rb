@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'open-uri'
+require 'socket'
 require 'shellwords'
 
 class CLITest < MiniTest::Unit::TestCase
@@ -174,19 +175,27 @@ EOS
   end
 
   class CLIRunnerErrorOutputTest < CLITest
+
     ERROR_MISSING_WORD = "Error: No definitions found for #{EMPTY_ENTRY.word.upcase}\n"
+    ERROR_NO_INTERNET = "Error: Could not find an internet connection\n"
 
     def setup
       super
-      @dictionary = MiniTest::Mock.new
     end
 
     # Tests
     def test_search_missing_word_prints_error
-      @program.dictionary = @dictionary.expect(:search, EMPTY_ENTRY, ['gubble'])
-      argument_variations = ['gubble']
-      assert_program_output(argument_variations, nil, ERROR_MISSING_WORD)
-      @dictionary.verify
+      dictionary = MiniTest::Mock.new
+      @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ['gubble'])
+      assert_program_output(['gubble'], nil, ERROR_MISSING_WORD)
+      dictionary.verify
+    end
+
+    def test_search_missing_word_prints_error
+      dictionary = (Object.new).extend Stub
+      dictionary.stub(:search) { |word| raise SocketError }
+      @program.dictionary = dictionary
+      assert_program_output(['gubble'], nil, ERROR_NO_INTERNET)
     end
   end
 end
