@@ -10,6 +10,7 @@
 
     * Cleaner error when searching for undefined words
     * Cleaner error when for no internet connection
+    * Cleaner error when invalid options are passed in
     * Add this history file
     * Add Urban::Web#fetch for fetching pages from urban dictionary
     * Add examples to help
