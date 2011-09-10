@@ -23,7 +23,7 @@ With git and local working copy
     $ cd urban
     $ sudo rake install
 
-== Usage
+== CLI Usage
 
 === 1. Look up a definition
 
@@ -32,21 +32,45 @@ With git and local working copy
 === 2. Random definition
 
     $ urban -r
+    $ urban --random
 
 === 3. Print all definitons
 
-    $ urban -l cookie monster
+    $ urban -a cookie monster
+    $ urban -ra
 
-=== 4. Print help and version
+=== 4. Print the url of the definition at the end of the output
+
+    $ urban -u cookie monster
+    $ urban -ru
+
+=== 5. Print help and version
 
     $ urban --help
     $ urban --version
 
+== API Ussage
+
+    requre 'urban'
+
+    # Search for a word
+    entry = Urban::Dictionary.search('impromtpu')
+
+    # Get a random word
+    entry = Urban::Dictionary.random
+
+
+    puts entry.phrase     # print the phrase
+    puts entry.url        # print the url of the phrase
+
+    # print all of the definitions
+    entry.definitions.each do |definition|
+      puts definition
+    end
+
 == To Do
 
-* Add test and code for exception handling (especially 404's)
-* Document with {YARD}[http://yardoc.org]
-* Print better looking output
+* Add YARD documentation for API
 
 ---
 
