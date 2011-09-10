@@ -11,6 +11,7 @@ Search http://urbandictionary.com for definitions of phrases
 Options:
     -a, --all                        List all definitions
     -r, --random                     Return a random phrase and definition
+    -u, --url                        Print the url for this definition
     -h, --help                       Show this message
     -v, --version                    Show version information
     -l, --list                       DEPRECATED please use --all or -a instead
@@ -89,12 +90,19 @@ EOS
         assert_flag_is_set('all')
       end
     end
+
+    def test_all_flag
+      assert_silent do
+        assert_flag_is_set('url')
+      end
+    end
   end
 
   class CLIRunnerStandardOutputTest < CLITest
 
     SINGLE_DEFINITION = "\n#{TEST_ENTRY.word.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\n"
     MULTIPLE_DEFINITIONS = "\n#{TEST_ENTRY.word.upcase}\n\n#{TEST_ENTRY.definitions.join("\n\n")}\n\n"
+    DEFINITION_WITH_URL = "\n#{TEST_ENTRY.word.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\nURL: #{TEST_ENTRY.url}\n\n"
 
     def setup
       super
@@ -119,13 +127,6 @@ EOS
       @dictionary.verify
     end
 
-    def test_random_and_all_flag_prints_multiple_definitions
-      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      argument_variations = ['-ra', '-r -a', '--random -a', '-r --all', '--all --random']
-      assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
-      @dictionary.verify
-    end
-
     def test_phrase_prints_single_definition
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
       argument_variations = ['impromptu']
@@ -133,10 +134,31 @@ EOS
       @dictionary.verify
     end
 
+    def test_random_and_all_flag_prints_multiple_definitions
+      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
+      argument_variations = ['-ra', '-r -a', '--random -a', '-r --all', '--all --random']
+      assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
+      @dictionary.verify
+    end
+
     def test_phrase_and_all_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
       argument_variations = ['impromptu -a', '--all impromptu']
       assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
+      @dictionary.verify
+    end
+
+    def test_random_and_url_flag_prints_definition_with_url
+      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
+      argument_variations = ['-ru', '-r -u', '--random -u', '-r --url', '--url --random']
+      assert_program_output(argument_variations, DEFINITION_WITH_URL)
+      @dictionary.verify
+    end
+
+    def test_phrase_and_url_flag_prints_definition_with_url
+      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
+      argument_variations = ['impromptu -u', '--url impromptu']
+      assert_program_output(argument_variations, DEFINITION_WITH_URL)
       @dictionary.verify
     end
 

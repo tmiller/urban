@@ -41,6 +41,7 @@ module Urban
       else
         puts "#{entry.definitions.first}\n\n"
       end
+      puts "URL: #{entry.url}\n\n" if options.url
     end
 
     def parse(args)
@@ -61,6 +62,10 @@ Search http://urbandictionary.com for definitions of phrases
 
         o.on('-r', '--random', 'Return a random phrase and definition') do
           options.random = true
+        end
+
+        o.on('-u', '--url', 'Print the url for this definition') do
+          options.url = true
         end
 
         o.on('-h', '--help', 'Show this message') do
