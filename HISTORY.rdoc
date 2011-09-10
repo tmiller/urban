@@ -1,12 +1,12 @@
 === 1.0.0
 
-* major enhancements:
+* Major enhancements:
 
   * Change `list` flag to the `all` flag for more clarity
   * Remove query from Urban::Web replace with random and search
   * Add `url` flag to print the url of the definition
 
-* minor enhancements:
+* Minor enhancements:
 
   * Add this history file
   * Add Urban::Web#fetch for fetching pages from urban dictionary
@@ -17,7 +17,7 @@
   * Replace OpenStruct in Urban::Dictionary with plain Struct
   * Move Nokogiri call to Dictionary#process
 
-* bug fix:
+* Bug fix:
 
   * Passing -v or --version no longer prints help
   * Undefined words now show a clean error
