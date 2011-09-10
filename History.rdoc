@@ -4,9 +4,11 @@
 
     * Change --list flag to --all for more clarity
     * Remove query from Urban::Web replace with random and search
+    * Add --url to print the url of the definition
 
   * minor enhancements:
 
+    * Cleaner error when searching for undefined words
     * Add this history file
     * Add Urban::Web#fetch for fetching pages from urban dictionary
     * Add examples to help
