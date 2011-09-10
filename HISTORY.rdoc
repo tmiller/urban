@@ -1,11 +1,13 @@
 === 1.0.0
 
 * major enhancements:
-  * Change <tt>list</tt> flag to <tt>all</tt> for more clarity
+
+  * Change `list` flag to the `all` flag for more clarity
   * Remove query from Urban::Web replace with random and search
-  * Add <tt>url</tt> to print the url of the definition
+  * Add `url` flag to print the url of the definition
 
 * minor enhancements:
+
   * Cleaner error when searching for undefined words
   * Cleaner error when for no internet connection
   * Cleaner error when invalid options are passed in
