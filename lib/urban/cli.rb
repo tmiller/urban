@@ -21,13 +21,17 @@ module Urban
         else                        ; options.help_screen
       end
       if output.respond_to?(:word)
-        print_entry(output, options)
+        output.definitions ? print_entry(output, options) : print_error(output)
       else
         puts output
       end
     end
 
     private
+
+    def print_error(entry)
+      $stderr.puts 'Error: No definitions found for ' + entry.word.upcase
+    end
 
     def print_entry(entry, options)
       puts "WARNING: --list and -l are deprecated please use --all or -a instead" if options.list

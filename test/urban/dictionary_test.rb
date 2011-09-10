@@ -12,8 +12,8 @@ class DictionaryTest < MiniTest::Unit::TestCase
   end
 
   def test_process_extracts_elements_from_html
-   entry = @dictionary.send(:process, @response )
-   assert_equal(TEST_ENTRY, entry)
+    entry = @dictionary.send(:process, @response )
+    assert_equal(TEST_ENTRY, entry)
   end
 
   def test_dictionary_calls_random
@@ -26,5 +26,12 @@ class DictionaryTest < MiniTest::Unit::TestCase
    @dictionary.web_service = @web_service.expect(:search, @response, ['impromptu'])
    assert_equal(TEST_ENTRY, @dictionary.search('impromptu'))
    @web_service.verify
+  end
+
+  def test_dictionary_returns_empty_for_missing_words
+    @response.stream = load_file('missing.html')
+    @dictionary.web_service = @web_service.expect(:search, @response, ['gubble'])
+    assert_equal(EMPTY_ENTRY, @dictionary.search('gubble'))
+    @web_service.verify
   end
 end

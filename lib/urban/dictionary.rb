@@ -6,7 +6,7 @@ module Urban
   module Dictionary
     extend self
 
-    Entry = Struct.new(:found_word?, :word, :definitions, :source)
+    Entry = Struct.new(:word, :definitions, :source)
     attr_writer :web_service
 
     def random
@@ -25,10 +25,13 @@ module Urban
 
     def process(response)
       document = Nokogiri::HTML(response.stream)
-      Entry.new(true,
-                document.at_xpath('//td[@class="word"][1]').content.strip,
-                parse_definitions(document),
-                response.url)
+      if not_defined = document.at_xpath('//div[@id="not_defined_yet"]/i')
+        Entry.new(not_defined.content.strip, nil, nil)
+      else
+        Entry.new( document.at_xpath('//td[@class="word"][1]').content.strip ,
+                   parse_definitions(document),
+                   response.url)
+      end
     end
 
     def parse_definitions(document)

@@ -30,6 +30,13 @@ EOS
     @program = Urban::CLI.new
   end
 
+  # Helpers
+  def assert_program_output(argument_variations, stdout=nil, stderr=nil)
+    argument_variations.each do |args|
+      assert_output(stdout, stderr) { @program.run(Shellwords.shellwords(args)) }
+    end
+  end
+
   class CLIArgumentParsingTest < CLITest
 
     # Helpers
@@ -94,13 +101,6 @@ EOS
       @dictionary = MiniTest::Mock.new
     end
 
-    # Helpers
-    def assert_program_output(argument_variations, stdout=nil, stderr=nil)
-      argument_variations.each do |args|
-        assert_output(stdout, stderr) { @program.run(Shellwords.shellwords(args)) }
-      end
-    end
-
     # Tests
     def test_help_flag_prints_help
       assert_output(HELP_SCREEN) { @program.run([]) }
@@ -152,6 +152,19 @@ EOS
   end
 
   class CLIRunnerErrorOutputTest < CLITest
-  end
+    ERROR_MISSING_WORD = "Error: No definitions found for #{EMPTY_ENTRY.word.upcase}\n"
 
+    def setup
+      super
+      @dictionary = MiniTest::Mock.new
+    end
+
+    # Tests
+    def test_search_missing_word_prints_error
+      @program.dictionary = @dictionary.expect(:search, EMPTY_ENTRY, ['gubble'])
+      argument_variations = ['gubble']
+      assert_program_output(argument_variations, nil, ERROR_MISSING_WORD)
+      @dictionary.verify
+    end
+  end
 end
