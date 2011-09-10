@@ -101,9 +101,9 @@ EOS
 
   class CLIRunnerStandardOutputTest < CLITest
 
-    SINGLE_DEFINITION = "\n#{TEST_ENTRY.word.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\n"
-    MULTIPLE_DEFINITIONS = "\n#{TEST_ENTRY.word.upcase}\n\n#{TEST_ENTRY.definitions.join("\n\n")}\n\n"
-    DEFINITION_WITH_URL = "\n#{TEST_ENTRY.word.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\nURL: #{TEST_ENTRY.url}\n\n"
+    SINGLE_DEFINITION = "\n#{TEST_ENTRY.phrase.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\n"
+    MULTIPLE_DEFINITIONS = "\n#{TEST_ENTRY.phrase.upcase}\n\n#{TEST_ENTRY.definitions.join("\n\n")}\n\n"
+    DEFINITION_WITH_URL = "\n#{TEST_ENTRY.phrase.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\nURL: #{TEST_ENTRY.url}\n\n"
 
     def setup
       super
@@ -176,7 +176,7 @@ EOS
 
   class CLIRunnerErrorOutputTest < CLITest
 
-    ERROR_MISSING_WORD = "Error: No definitions found for #{EMPTY_ENTRY.word.upcase}\n"
+    ERROR_MISSING_PHRASE = "Error: No definitions found for #{EMPTY_ENTRY.phrase.upcase}\n"
     ERROR_NO_INTERNET = "Error: Could not find an internet connection\n"
 
     def setup
@@ -184,16 +184,16 @@ EOS
     end
 
     # Tests
-    def test_search_missing_word_prints_error
+    def test_search_missing_phrase_prints_error
       dictionary = MiniTest::Mock.new
       @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ['gubble'])
-      assert_program_output(['gubble'], nil, ERROR_MISSING_WORD)
+      assert_program_output(['gubble'], nil, ERROR_MISSING_PHRASE)
       dictionary.verify
     end
 
-    def test_search_missing_word_prints_error
+    def test_search_missing_phrase_prints_error
       dictionary = (Object.new).extend Stub
-      dictionary.stub(:search) { |word| raise SocketError }
+      dictionary.stub(:search) { |phrase| raise SocketError }
       @program.dictionary = dictionary
       assert_program_output(['gubble'], nil, ERROR_NO_INTERNET)
     end

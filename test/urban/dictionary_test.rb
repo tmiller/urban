@@ -28,7 +28,7 @@ class DictionaryTest < MiniTest::Unit::TestCase
    @web_service.verify
   end
 
-  def test_dictionary_returns_empty_for_missing_words
+  def test_dictionary_returns_empty_for_missing_phrases
     @response.stream = load_file('missing.html')
     @dictionary.web_service = @web_service.expect(:search, @response, ['gubble'])
     assert_equal(EMPTY_ENTRY, @dictionary.search('gubble'))

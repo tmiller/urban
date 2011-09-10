@@ -6,7 +6,7 @@ module Urban
   module Dictionary
     extend self
 
-    Entry = Struct.new(:word, :definitions, :url)
+    Entry = Struct.new(:phrase, :definitions, :url)
     attr_writer :web_service
 
     def random

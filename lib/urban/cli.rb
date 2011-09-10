@@ -22,11 +22,11 @@ module Urban
           else                        ; options.help_screen
         end
 
-        if output.respond_to?(:word)
+        if output.respond_to?(:phrase)
           if output.definitions
             print_entry(output, options)
           else
-            $stderr.puts 'Error: No definitions found for ' + entry.word.upcase
+            $stderr.puts 'Error: No definitions found for ' + entry.phrase.upcase
           end
         else
           puts output
@@ -46,7 +46,7 @@ module Urban
 
     def print_entry(entry, options)
       puts "WARNING: --list and -l are deprecated please use --all or -a instead" if options.list
-      puts "\n#{entry.word.upcase}\n\n"
+      puts "\n#{entry.phrase.upcase}\n\n"
       if options.all
         entry.definitions.each { |definition| puts "#{definition}\n\n" }
       else
