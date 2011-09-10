@@ -12,7 +12,7 @@ Search http://urbandictionary.com for definitions of phrases
 Options:
     -a, --all                        List all definitions
     -r, --random                     Return a random phrase and definition
-    -u, --url                        Print the url for this definition
+    -u, --url                        Print the definition's url after the definition
     -h, --help                       Show this message
     -v, --version                    Show version information
     -l, --list                       DEPRECATED please use --all or -a instead

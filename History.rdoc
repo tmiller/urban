@@ -9,6 +9,7 @@
   * minor enhancements:
 
     * Cleaner error when searching for undefined words
+    * Cleaner error when for no internet connection
     * Add this history file
     * Add Urban::Web#fetch for fetching pages from urban dictionary
     * Add examples to help

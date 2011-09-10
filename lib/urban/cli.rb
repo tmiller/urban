@@ -31,6 +31,7 @@ module Urban
         else
           puts output
         end
+
       rescue SocketError
           $stderr.puts 'Error: Could not find an internet connection'
       rescue Exception => e
@@ -74,7 +75,7 @@ Search http://urbandictionary.com for definitions of phrases
           options.random = true
         end
 
-        o.on('-u', '--url', 'Print the url for this definition') do
+        o.on('-u', '--url', "Print the definition's url after the definition") do
           options.url = true
         end
 
