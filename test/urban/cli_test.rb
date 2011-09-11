@@ -203,9 +203,6 @@ Try `urban --help' for more information.
     end
 
     def test_invalid_option_prints_help
-      dictionary = (Object.new).extend Stub
-      dictionary.stub(:search) { |phrase| raise OptionParser::InvalidOption }
-      @program.dictionary = dictionary
       assert_program_output(['-b'], nil, ERROR_INVALID_OPTION)
     end
   end
