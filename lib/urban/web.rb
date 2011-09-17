@@ -7,7 +7,7 @@ module Urban
 
     Response = Struct.new(:url, :stream)
 
-    URL = 'http://www.urbandictionary.com'
+    attr_writer :url
 
     def search(phrase)
       result = fetch "define.php", :term => phrase
@@ -21,7 +21,11 @@ module Urban
 
     def fetch(page, parameters = {})
       params = '?' +  parameters.map { |k,v| "#{k}=#{v}" }.join('&') unless parameters.empty?
-      open(escape_uri("#{URL}/#{page}#{params}"))
+      open(escape_uri("#{url}/#{page}#{params}"))
+    end
+
+    def url
+      @url ||= 'http://www.urbandictionary.com'
     end
 
   private
