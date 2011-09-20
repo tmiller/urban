@@ -49,7 +49,7 @@ With git and local working copy
     $ urban --help
     $ urban --version
 
-== API Ussage
+== API Usage
 
     requre 'urban'
 
