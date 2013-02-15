@@ -169,7 +169,7 @@ EOS
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
       stdout, stederr = capture_io { @program.run(Shellwords.shellwords('--list impromptu')) }
       assert_match expected, stdout
-      stdou, stederr  = capture_io { @program.run(Shellwords.shellwords('-rl')) }
+      stdout, stederr  = capture_io { @program.run(Shellwords.shellwords('-rl')) }
       assert_match expected, stdout
     end
   end
