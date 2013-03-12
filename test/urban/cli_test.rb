@@ -28,15 +28,13 @@ Examples:
 
 EOS
 
-  def setup
-    @program = Urban::CLI.new
+  # Helpers
+  def run_program(args)
+    @program.run(Shellwords.shellwords(args))
   end
 
-  # Helpers
-  def assert_program_output(argument_variations, stdout=nil, stderr=nil)
-    argument_variations.each do |args|
-      assert_output(stdout, stderr) { @program.run(Shellwords.shellwords(args)) }
-    end
+  def setup
+    @program = Urban::CLI.new
   end
 
   class CLIArgumentParsingTest < CLITest
@@ -123,43 +121,48 @@ EOS
 
     def test_random_flag_prints_single_definition
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      argument_variations = ['-r', '--random']
-      assert_program_output(argument_variations, SINGLE_DEFINITION)
+      assert_output(SINGLE_DEFINITION) { run_program "-r" }
+      assert_output(SINGLE_DEFINITION) { run_program "--random" }
       @dictionary.verify
     end
 
     def test_phrase_prints_single_definition
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
-      argument_variations = ['impromptu']
-      assert_program_output(argument_variations, SINGLE_DEFINITION)
+      assert_output(SINGLE_DEFINITION) { run_program "impromptu" }
       @dictionary.verify
     end
 
     def test_random_and_all_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      argument_variations = ['-ra', '-r -a', '--random -a', '-r --all', '--all --random']
-      assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
+      assert_output(MULTIPLE_DEFINITIONS) { run_program "-ra" }
+      assert_output(MULTIPLE_DEFINITIONS) { run_program "-r -a" }
+      assert_output(MULTIPLE_DEFINITIONS) { run_program "--random -a" }
+      assert_output(MULTIPLE_DEFINITIONS) { run_program "-r --all" }
+      assert_output(MULTIPLE_DEFINITIONS) { run_program "--all --random" }
       @dictionary.verify
     end
 
     def test_phrase_and_all_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
-      argument_variations = ['impromptu -a', '--all impromptu']
-      assert_program_output(argument_variations, MULTIPLE_DEFINITIONS)
+      assert_output(MULTIPLE_DEFINITIONS) { run_program "impromptu -a" }
+      assert_output(MULTIPLE_DEFINITIONS) { run_program "--all impromptu" }
       @dictionary.verify
     end
 
     def test_random_and_url_flag_prints_definition_with_url
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      argument_variations = ['-ru', '-r -u', '--random -u', '-r --url', '--url --random']
-      assert_program_output(argument_variations, DEFINITION_WITH_URL)
+      assert_output(DEFINITION_WITH_URL) { run_program "-ru" }
+      assert_output(DEFINITION_WITH_URL) { run_program "-r -u" }
+      assert_output(DEFINITION_WITH_URL) { run_program "--random -u" }
+      assert_output(DEFINITION_WITH_URL) { run_program "-r --url" }
+      assert_output(DEFINITION_WITH_URL) { run_program "--url --random" }
       @dictionary.verify
     end
 
     def test_phrase_and_url_flag_prints_definition_with_url
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
-      argument_variations = ['impromptu -u', '--url impromptu']
-      assert_program_output(argument_variations, DEFINITION_WITH_URL)
+      assert_output(DEFINITION_WITH_URL) { run_program "impromptu -u" }
+      assert_output(DEFINITION_WITH_URL) { run_program "--url impromptu" }
       @dictionary.verify
     end
 
@@ -167,7 +170,7 @@ EOS
       expected = /WARNING: --list and -l are deprecated please use --all or -a instead/
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      stdout, stederr = capture_io { @program.run(Shellwords.shellwords('--list impromptu')) }
+      stdout, stederr = capture_io { run_program '--list impromptu' }
       assert_match expected, stdout
       stdout, stederr  = capture_io { @program.run(Shellwords.shellwords('-rl')) }
       assert_match expected, stdout
@@ -191,7 +194,7 @@ Try `urban --help' for more information.
     def test_search_missing_phrase_prints_error
       dictionary = MiniTest::Mock.new
       @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ['gubble'])
-      assert_program_output(['gubble'], nil, ERROR_MISSING_PHRASE)
+      assert_output(nil, ERROR_MISSING_PHRASE) { run_program("gubble") }
       dictionary.verify
     end
 
@@ -199,11 +202,11 @@ Try `urban --help' for more information.
       dictionary = (Object.new).extend Stub
       dictionary.stub(:search) { |phrase| raise SocketError }
       @program.dictionary = dictionary
-      assert_program_output(['gubble'], nil, ERROR_NO_INTERNET)
+      assert_output(nil, ERROR_NO_INTERNET) { run_program("gubble") }
     end
 
     def test_invalid_option_prints_help
-      assert_program_output(['-b'], nil, ERROR_INVALID_OPTION)
+      assert_output(nil, ERROR_INVALID_OPTION) { run_program("-b") }
     end
   end
 end
