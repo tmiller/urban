@@ -5,29 +5,6 @@ require 'shellwords'
 
 class CLITest < MiniTest::Unit::TestCase
 
-  HELP_SCREEN = <<-EOS
-Usage: urban [OPTION]... [PHRASE]
-Search http://urbandictionary.com for definitions of phrases
-
-Options:
-    -a, --all                        List all definitions
-    -r, --random                     Return a random phrase and definition
-    -u, --url                        Print the definition's url after the definition
-    -h, --help                       Show this message
-    -v, --version                    Show version information
-    -l, --list                       DEPRECATED please use --all or -a instead
-
-Examples:
-    urban cookie monster        Search for "cookie monster" and print its
-                                first definition
-    urban -a cookie monster     Search for "cookie monster" and print all of
-                                its available definitions
-    urban -r                    Print a random phrase and its first definition
-    urban -ra                   Print a random phrase and all of its available
-                                definitions
-
-EOS
-
   # Helpers
   def run_program(args)
     @program.run(Shellwords.shellwords(args))
@@ -110,7 +87,8 @@ EOS
 
     # Tests
     def test_help_flag_prints_help
-      assert_output(HELP_SCREEN) { @program.run([]) }
+      help_screen = load_file "help_screen.txt"
+      assert_output(help_screen) { @program.run([]) }
     end
 
     def test_version_flag_prints_version
