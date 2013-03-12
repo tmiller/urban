@@ -68,10 +68,6 @@ With git and local working copy
       puts definition
     end
 
-== To Do
-
-* Add YARD documentation for API
-
 ---
 
 Copyright (c) 2011 Thomas Miller. See LICENSE for details.
