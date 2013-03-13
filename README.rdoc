@@ -51,7 +51,7 @@ With git and local working copy
 
 == API Usage
 
-    requre 'urban'
+    require 'urban'
 
     # Search for a word
     entry = Urban::Dictionary.search('impromtpu')
