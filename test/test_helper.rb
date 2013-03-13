@@ -16,8 +16,8 @@ TEST_ENTRY = Urban::Dictionary::Entry.new('impromptu',
 
 EMPTY_ENTRY = Urban::Dictionary::Entry.new('gubble', nil, nil)
 
-def load_file(filename)
-  IO.read(File.expand_path("../data/#{filename}", __FILE__))
+def load_fixture(filename)
+  IO.read(File.expand_path("../fixtures/#{filename}", __FILE__))
 end
 
 module Stub

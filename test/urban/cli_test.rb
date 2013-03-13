@@ -87,7 +87,7 @@ class CLITest < MiniTest::Unit::TestCase
 
     # Tests
     def test_help_flag_prints_help
-      help_screen = load_file "help_screen.txt"
+      help_screen = load_fixture "help_screen.txt"
       assert_output(help_screen) { @program.run([]) }
     end
 

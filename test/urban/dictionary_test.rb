@@ -8,7 +8,7 @@ class DictionaryTest < MiniTest::Unit::TestCase
 
     @response = OpenStruct.new
     @response.url = 'http://www.urbandictionary.com/define.php?term=impromptu'
-    @response.stream = load_file('impromptu.html')
+    @response.stream = load_fixture 'impromptu.html'
   end
 
   def test_process_extracts_elements_from_html
@@ -29,7 +29,7 @@ class DictionaryTest < MiniTest::Unit::TestCase
   end
 
   def test_dictionary_returns_empty_for_missing_phrases
-    @response.stream = load_file('missing.html')
+    @response.stream = load_fixture 'missing.html'
     @dictionary.web_service = @web_service.expect(:search, @response, ['gubble'])
     assert_equal(EMPTY_ENTRY, @dictionary.search('gubble'))
     @web_service.verify
