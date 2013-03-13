@@ -76,7 +76,7 @@ class CLITest < Urban::TestCase
     end
 
     def test_random_flag_prints_single_definition
-      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
+      @program.dictionary = @dictionary.expect(:random, test_entry)
       single_definition = load_fixture "screens/definition.txt"
 
       assert_output(single_definition) { run_program "--random" }
@@ -84,7 +84,7 @@ class CLITest < Urban::TestCase
     end
 
     def test_phrase_prints_single_definition
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
+      @program.dictionary = @dictionary.expect(:search, test_entry, ["impromptu"])
       single_definition = load_fixture "screens/definition.txt"
 
       assert_output(single_definition) { run_program "impromptu" }
@@ -92,7 +92,7 @@ class CLITest < Urban::TestCase
     end
 
     def test_random_and_all_flag_prints_multiple_definitions
-      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
+      @program.dictionary = @dictionary.expect(:random, test_entry)
       multiple_definitions = load_fixture "screens/definitions.txt"
 
       assert_output(multiple_definitions) { run_program "--all --random" }
@@ -100,7 +100,7 @@ class CLITest < Urban::TestCase
     end
 
     def test_phrase_and_all_flag_prints_multiple_definitions
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
+      @program.dictionary = @dictionary.expect(:search, test_entry, ["impromptu"])
       multiple_definitions = load_fixture "screens/definitions.txt"
 
       assert_output(multiple_definitions) { run_program "--all impromptu" }
@@ -108,7 +108,7 @@ class CLITest < Urban::TestCase
     end
 
     def test_random_and_url_flag_prints_definition_with_url
-      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
+      @program.dictionary = @dictionary.expect(:random, test_entry)
       definition_with_url = load_fixture "screens/definition_with_url.txt"
 
       assert_output(definition_with_url) { run_program "--url --random" }
@@ -116,7 +116,7 @@ class CLITest < Urban::TestCase
     end
 
     def test_phrase_and_url_flag_prints_definition_with_url
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
+      @program.dictionary = @dictionary.expect(:search, test_entry, ["impromptu"])
       definition_with_url = load_fixture "screens/definition_with_url.txt"
 
       assert_output(definition_with_url) { run_program "--url impromptu" }
@@ -133,7 +133,7 @@ class CLITest < Urban::TestCase
 
     def test_search_missing_phrase_prints_error
       dictionary = MiniTest::Mock.new
-      @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ["gubble"])
+      @program.dictionary = dictionary.expect(:search, empty_entry, ["gubble"])
       missing_phrase_error = load_fixture "screens/missing_phrase_error.txt"
 
       assert_output(nil, missing_phrase_error) { run_program("gubble") }
