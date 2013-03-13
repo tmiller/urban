@@ -18,18 +18,18 @@ class CLITest < MiniTest::Unit::TestCase
     def assert_flag_is_set(name)
       ["-#{name.chars.first}", "--#{name}"].each do |args|
         options = @program.send(:parse, [args])
-        assert_equal(true, options.send(name))
+        assert options.send(name)
       end
     end
 
     def test_defaults
       assert_silent do
         options = @program.send(:parse, [])
-        assert_equal(false, options.help)
-        assert_equal(false, options.version)
-        assert_equal(false, options.random)
-        assert_equal(false, options.all)
-        assert_equal('', options.phrase)
+        refute options.help
+        refute options.version
+        refute options.random
+        refute options.all
+        assert_empty options.phrase
       end
     end
 
