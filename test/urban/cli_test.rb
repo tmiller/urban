@@ -59,7 +59,6 @@ class CLITest < Urban::TestCase
 
   class CLIRunnerStandardOutputTest < CLITest
 
-
     def setup
       super
       @dictionary = MiniTest::Mock.new

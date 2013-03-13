@@ -4,7 +4,6 @@ class WebTest < Urban::TestCase
 
   class WebFetchTest < WebTest
     def setup
-      super
       @reflect_args = lambda { |a| a }
     end
 
@@ -28,7 +27,6 @@ class WebTest < Urban::TestCase
   class WebInterfaceTest < WebTest
 
     def setup
-      super
       @expected = OpenStruct.new(
         :base_uri => "http://www.urbandictionary.com/define.php?term=impromptu"
       )

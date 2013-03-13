@@ -5,10 +5,10 @@ class DictionaryTest < Urban::TestCase
   def setup
     @web_service = MiniTest::Mock.new
     @dictionary = Urban::Dictionary
-
-    @response = OpenStruct.new
-    @response.url = 'http://www.urbandictionary.com/define.php?term=impromptu'
-    @response.stream = load_fixture 'impromptu.html'
+    @response = OpenStruct.new(
+      :url => "http://www.urbandictionary.com/define.php?term=impromptu",
+      :stream => load_fixture("impromptu.html")
+    )
   end
 
   def test_process_extracts_elements_from_html
@@ -34,4 +34,5 @@ class DictionaryTest < Urban::TestCase
     assert_equal(empty_entry, @dictionary.search('gubble'))
     @web_service.verify
   end
+
 end
