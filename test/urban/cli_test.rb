@@ -23,51 +23,37 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_defaults
-      assert_silent do
-        options = @program.send(:parse, [])
-        refute options.help
-        refute options.version
-        refute options.random
-        refute options.all
-        assert_empty options.phrase
-      end
+      options = @program.send(:parse, [])
+      refute options.help
+      refute options.version
+      refute options.random
+      refute options.all
+      assert_empty options.phrase
     end
 
     def test_phrase
-      assert_silent do
-        options = @program.send :parse, ["foo bar"]
-        assert_equal "foo bar", options.phrase
-      end
+      options = @program.send :parse, ["foo bar"]
+      assert_equal "foo bar", options.phrase
     end
 
     def test_help_flag
-      assert_silent do
-        assert_flag_is_set "help"
-      end
+      assert_flag_is_set "help"
     end
 
     def test_version_flag
-      assert_silent do
-        assert_flag_is_set "version"
-      end
+      assert_flag_is_set "version"
     end
 
     def test_random_flag
-      assert_silent do
-        assert_flag_is_set "random"
-      end
+      assert_flag_is_set "random"
     end
 
     def test_all_flag
-      assert_silent do
-        assert_flag_is_set "all"
-      end
+      assert_flag_is_set "all"
     end
 
     def test_url_flag
-      assert_silent do
-        assert_flag_is_set "url"
-      end
+      assert_flag_is_set "url"
     end
   end
 
@@ -85,16 +71,14 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_version_flag_prints_version
-      ["-v", "--v"].each do |args|
-        assert_output("Urban #{Urban::VERSION} (c) Thomas Miller\n") { @program.run([args]) }
-      end
+      version_screen = "Urban #{Urban::VERSION} (c) Thomas Miller\n"
+      assert_output(version_screen) { run_program "--version" }
     end
 
     def test_random_flag_prints_single_definition
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
       single_definition = load_fixture "screens/definition.txt"
 
-      assert_output(single_definition) { run_program "-r" }
       assert_output(single_definition) { run_program "--random" }
       @dictionary.verify
     end
@@ -111,10 +95,6 @@ class CLITest < MiniTest::Unit::TestCase
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
       multiple_definitions = load_fixture "screens/definitions.txt"
 
-      assert_output(multiple_definitions) { run_program "-ra" }
-      assert_output(multiple_definitions) { run_program "-r -a" }
-      assert_output(multiple_definitions) { run_program "--random -a" }
-      assert_output(multiple_definitions) { run_program "-r --all" }
       assert_output(multiple_definitions) { run_program "--all --random" }
       @dictionary.verify
     end
@@ -123,7 +103,6 @@ class CLITest < MiniTest::Unit::TestCase
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
       multiple_definitions = load_fixture "screens/definitions.txt"
 
-      assert_output(multiple_definitions) { run_program "impromptu -a" }
       assert_output(multiple_definitions) { run_program "--all impromptu" }
       @dictionary.verify
     end
@@ -132,10 +111,6 @@ class CLITest < MiniTest::Unit::TestCase
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
       definition_with_url = load_fixture "screens/definition_with_url.txt"
 
-      assert_output(definition_with_url) { run_program "-ru" }
-      assert_output(definition_with_url) { run_program "-r -u" }
-      assert_output(definition_with_url) { run_program "--random -u" }
-      assert_output(definition_with_url) { run_program "-r --url" }
       assert_output(definition_with_url) { run_program "--url --random" }
       @dictionary.verify
     end
@@ -144,7 +119,6 @@ class CLITest < MiniTest::Unit::TestCase
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
       definition_with_url = load_fixture "screens/definition_with_url.txt"
 
-      assert_output(definition_with_url) { run_program "impromptu -u" }
       assert_output(definition_with_url) { run_program "--url impromptu" }
       @dictionary.verify
     end
