@@ -1,7 +1,7 @@
-require 'test_helper'
-require 'open-uri'
-require 'socket'
-require 'shellwords'
+require "test_helper"
+require "open-uri"
+require "socket"
+require "shellwords"
 
 class CLITest < MiniTest::Unit::TestCase
 
@@ -35,38 +35,38 @@ class CLITest < MiniTest::Unit::TestCase
 
     def test_phrase
       assert_silent do
-        options = @program.send(:parse, ['foo bar'])
-        assert_equal('foo bar', options.phrase)
+        options = @program.send :parse, ["foo bar"]
+        assert_equal "foo bar", options.phrase
       end
     end
 
     def test_help_flag
       assert_silent do
-        assert_flag_is_set('help')
+        assert_flag_is_set "help"
       end
     end
 
     def test_version_flag
       assert_silent do
-        assert_flag_is_set('version')
+        assert_flag_is_set "version"
       end
     end
 
     def test_random_flag
       assert_silent do
-        assert_flag_is_set('random')
+        assert_flag_is_set "random"
       end
     end
 
     def test_all_flag
       assert_silent do
-        assert_flag_is_set('all')
+        assert_flag_is_set "all"
       end
     end
 
     def test_url_flag
       assert_silent do
-        assert_flag_is_set('url')
+        assert_flag_is_set "url"
       end
     end
   end
@@ -88,7 +88,7 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_version_flag_prints_version
-      ['-v', '--v'].each do |args|
+      ["-v", "--v"].each do |args|
         assert_output("Urban #{Urban::VERSION} (c) Thomas Miller\n") { @program.run([args]) }
       end
     end
@@ -101,7 +101,7 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_phrase_prints_single_definition
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
+      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
       assert_output(SINGLE_DEFINITION) { run_program "impromptu" }
       @dictionary.verify
     end
@@ -117,7 +117,7 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_phrase_and_all_flag_prints_multiple_definitions
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
+      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
       assert_output(MULTIPLE_DEFINITIONS) { run_program "impromptu -a" }
       assert_output(MULTIPLE_DEFINITIONS) { run_program "--all impromptu" }
       @dictionary.verify
@@ -134,7 +134,7 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_phrase_and_url_flag_prints_definition_with_url
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
+      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
       assert_output(DEFINITION_WITH_URL) { run_program "impromptu -u" }
       assert_output(DEFINITION_WITH_URL) { run_program "--url impromptu" }
       @dictionary.verify
@@ -142,11 +142,11 @@ class CLITest < MiniTest::Unit::TestCase
 
     def test_list_flag_prints_deprecation_warning
       expected = /WARNING: --list and -l are deprecated please use --all or -a instead/
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ['impromptu'])
+      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      stdout, stederr = capture_io { run_program '--list impromptu' }
+      stdout, stederr = capture_io { run_program "--list impromptu" }
       assert_match expected, stdout
-      stdout, stederr  = capture_io { @program.run(Shellwords.shellwords('-rl')) }
+      stdout, stederr  = capture_io { @program.run(Shellwords.shellwords("-rl")) }
       assert_match expected, stdout
     end
   end
@@ -166,7 +166,7 @@ Try `urban --help' for more information.
 
     def test_search_missing_phrase_prints_error
       dictionary = MiniTest::Mock.new
-      @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ['gubble'])
+      @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ["gubble"])
       assert_output(nil, ERROR_MISSING_PHRASE) { run_program("gubble") }
       dictionary.verify
     end
