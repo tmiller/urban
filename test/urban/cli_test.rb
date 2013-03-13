@@ -151,12 +151,12 @@ class CLITest < MiniTest::Unit::TestCase
 
 
     def test_search_with_no_internet_prints_error
-      dictionary = (Object.new).extend Stub
-      dictionary.stub(:search) { |phrase| raise SocketError }
       no_internet_error = load_fixture "screens/no_internet_error.txt"
+      raise_socket_error = Proc.new { raise SocketError }
 
-      @program.dictionary = dictionary
-      assert_output(nil, no_internet_error) { run_program("gubble") }
+      Urban::Dictionary.stub :search, raise_socket_error do
+        assert_output(nil, no_internet_error) { run_program("gubble") } 
+      end
     end
 
     def test_invalid_option_prints_help

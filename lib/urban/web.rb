@@ -21,14 +21,15 @@ module Urban
 
     def fetch(page, parameters = {})
       params = '?' +  parameters.map { |k,v| "#{k}=#{v}" }.join('&') unless parameters.empty?
-      open(escape_uri("#{url}/#{page}#{params}"))
+      Kernel.open(escape_uri("#{url}/#{page}#{params}"))
     end
 
     def url
       @url ||= 'http://www.urbandictionary.com'
     end
 
-  private
+    private
+
     def escape_uri(uri)
       if RUBY_VERSION > '1.9'
         URI::Parser.new.escape(uri)

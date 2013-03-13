@@ -19,10 +19,3 @@ EMPTY_ENTRY = Urban::Dictionary::Entry.new('gubble', nil, nil)
 def load_fixture(filename)
   IO.read(File.expand_path("../fixtures/#{filename}", __FILE__))
 end
-
-module Stub
-  def stub(name, &block)
-    singleton_class = class << self; self; end
-    singleton_class.send(:define_method, name, &block)
-  end
-end
