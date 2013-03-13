@@ -123,15 +123,6 @@ class CLITest < MiniTest::Unit::TestCase
       @dictionary.verify
     end
 
-    def test_list_flag_prints_deprecation_warning
-      expected = /WARNING: --list and -l are deprecated please use --all or -a instead/
-      @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
-      @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      stdout, stederr = capture_io { run_program "--list impromptu" }
-      assert_match expected, stdout
-      stdout, stederr  = capture_io { @program.run(Shellwords.shellwords("-rl")) }
-      assert_match expected, stdout
-    end
   end
 
   class CLIRunnerErrorOutputTest < CLITest

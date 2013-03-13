@@ -1,17 +1,19 @@
 * Major enhancements:
 
-  * Remove official support for Ruby 1.8.6
+  * Remove deperecated `--list` and `-l` flags.
+  * Remove official support for Ruby 1.8.6.
 
 * Bug fixes
 
   * Undefined words now show a cleaner error. This was apparently not fixed
-    in the prior release
+    in the prior release.
 
 === 1.0.0
 
 * Major enhancements:
 
-  * Change `list` flag to the `all` flag for more clarity.
+  * Change `--list` flag to the `--all` flag for more clarity.
+  * Deprecate `--list` flag.
   * Remove query from Urban::Web replace with random and search.
   * Add `url` flag to print the url of the definition.
 

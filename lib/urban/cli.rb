@@ -48,7 +48,6 @@ module Urban
     end
 
     def print_entry(entry, options)
-      puts "WARNING: --list and -l are deprecated please use --all or -a instead" if options.list
       puts "\n#{entry.phrase.upcase}\n\n"
       if options.all
         entry.definitions.each { |definition| puts "#{definition}\n\n" }
@@ -90,10 +89,6 @@ Search http://urbandictionary.com for definitions of phrases
           options.version = true
         end
 
-        o.on('-l', '--list', 'DEPRECATED please use --all or -a instead') do
-          options.list = true
-          options.all = true
-        end
       end
 
       examples = <<-EOE

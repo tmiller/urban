@@ -7,7 +7,6 @@ Options:
     -u, --url                        Print the definition's url after the definition
     -h, --help                       Show this message
     -v, --version                    Show version information
-    -l, --list                       DEPRECATED please use --all or -a instead
 
 Examples:
     urban cookie monster        Search for "cookie monster" and print its
