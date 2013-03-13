@@ -73,9 +73,6 @@ class CLITest < MiniTest::Unit::TestCase
 
   class CLIRunnerStandardOutputTest < CLITest
 
-    SINGLE_DEFINITION = "\n#{TEST_ENTRY.phrase.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\n"
-    MULTIPLE_DEFINITIONS = "\n#{TEST_ENTRY.phrase.upcase}\n\n#{TEST_ENTRY.definitions.join("\n\n")}\n\n"
-    DEFINITION_WITH_URL = "\n#{TEST_ENTRY.phrase.upcase}\n\n#{TEST_ENTRY.definitions.first}\n\nURL: #{TEST_ENTRY.url}\n\n"
 
     def setup
       super
@@ -83,7 +80,7 @@ class CLITest < MiniTest::Unit::TestCase
     end
 
     def test_help_flag_prints_help
-      help_screen = load_fixture "help_screen.txt"
+      help_screen = load_fixture "screens/help.txt"
       assert_output(help_screen) { @program.run([]) }
     end
 
@@ -95,48 +92,60 @@ class CLITest < MiniTest::Unit::TestCase
 
     def test_random_flag_prints_single_definition
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      assert_output(SINGLE_DEFINITION) { run_program "-r" }
-      assert_output(SINGLE_DEFINITION) { run_program "--random" }
+      single_definition = load_fixture "screens/definition.txt"
+
+      assert_output(single_definition) { run_program "-r" }
+      assert_output(single_definition) { run_program "--random" }
       @dictionary.verify
     end
 
     def test_phrase_prints_single_definition
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
-      assert_output(SINGLE_DEFINITION) { run_program "impromptu" }
+      single_definition = load_fixture "screens/definition.txt"
+
+      assert_output(single_definition) { run_program "impromptu" }
       @dictionary.verify
     end
 
     def test_random_and_all_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      assert_output(MULTIPLE_DEFINITIONS) { run_program "-ra" }
-      assert_output(MULTIPLE_DEFINITIONS) { run_program "-r -a" }
-      assert_output(MULTIPLE_DEFINITIONS) { run_program "--random -a" }
-      assert_output(MULTIPLE_DEFINITIONS) { run_program "-r --all" }
-      assert_output(MULTIPLE_DEFINITIONS) { run_program "--all --random" }
+      multiple_definitions = load_fixture "screens/definitions.txt"
+
+      assert_output(multiple_definitions) { run_program "-ra" }
+      assert_output(multiple_definitions) { run_program "-r -a" }
+      assert_output(multiple_definitions) { run_program "--random -a" }
+      assert_output(multiple_definitions) { run_program "-r --all" }
+      assert_output(multiple_definitions) { run_program "--all --random" }
       @dictionary.verify
     end
 
     def test_phrase_and_all_flag_prints_multiple_definitions
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
-      assert_output(MULTIPLE_DEFINITIONS) { run_program "impromptu -a" }
-      assert_output(MULTIPLE_DEFINITIONS) { run_program "--all impromptu" }
+      multiple_definitions = load_fixture "screens/definitions.txt"
+
+      assert_output(multiple_definitions) { run_program "impromptu -a" }
+      assert_output(multiple_definitions) { run_program "--all impromptu" }
       @dictionary.verify
     end
 
     def test_random_and_url_flag_prints_definition_with_url
       @program.dictionary = @dictionary.expect(:random, TEST_ENTRY)
-      assert_output(DEFINITION_WITH_URL) { run_program "-ru" }
-      assert_output(DEFINITION_WITH_URL) { run_program "-r -u" }
-      assert_output(DEFINITION_WITH_URL) { run_program "--random -u" }
-      assert_output(DEFINITION_WITH_URL) { run_program "-r --url" }
-      assert_output(DEFINITION_WITH_URL) { run_program "--url --random" }
+      definition_with_url = load_fixture "screens/definition_with_url.txt"
+
+      assert_output(definition_with_url) { run_program "-ru" }
+      assert_output(definition_with_url) { run_program "-r -u" }
+      assert_output(definition_with_url) { run_program "--random -u" }
+      assert_output(definition_with_url) { run_program "-r --url" }
+      assert_output(definition_with_url) { run_program "--url --random" }
       @dictionary.verify
     end
 
     def test_phrase_and_url_flag_prints_definition_with_url
       @program.dictionary = @dictionary.expect(:search, TEST_ENTRY, ["impromptu"])
-      assert_output(DEFINITION_WITH_URL) { run_program "impromptu -u" }
-      assert_output(DEFINITION_WITH_URL) { run_program "--url impromptu" }
+      definition_with_url = load_fixture "screens/definition_with_url.txt"
+
+      assert_output(definition_with_url) { run_program "impromptu -u" }
+      assert_output(definition_with_url) { run_program "--url impromptu" }
       @dictionary.verify
     end
 
@@ -153,13 +162,6 @@ class CLITest < MiniTest::Unit::TestCase
 
   class CLIRunnerErrorOutputTest < CLITest
 
-    ERROR_MISSING_PHRASE = "urban: no definitions found for #{EMPTY_ENTRY.phrase.upcase}.\n"
-    ERROR_NO_INTERNET = "urban: no internet connection available.\n"
-    ERROR_INVALID_OPTION = <<-EOE
-urban: invalid option: -b
-Try `urban --help' for more information.
-    EOE
-
     def setup
       super
     end
@@ -167,19 +169,25 @@ Try `urban --help' for more information.
     def test_search_missing_phrase_prints_error
       dictionary = MiniTest::Mock.new
       @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ["gubble"])
-      assert_output(nil, ERROR_MISSING_PHRASE) { run_program("gubble") }
+      missing_phrase_error = load_fixture "screens/missing_phrase_error.txt"
+
+      assert_output(nil, missing_phrase_error) { run_program("gubble") }
       dictionary.verify
     end
+
 
     def test_search_with_no_internet_prints_error
       dictionary = (Object.new).extend Stub
       dictionary.stub(:search) { |phrase| raise SocketError }
+      no_internet_error = load_fixture "screens/no_internet_error.txt"
+
       @program.dictionary = dictionary
-      assert_output(nil, ERROR_NO_INTERNET) { run_program("gubble") }
+      assert_output(nil, no_internet_error) { run_program("gubble") }
     end
 
     def test_invalid_option_prints_help
-      assert_output(nil, ERROR_INVALID_OPTION) { run_program("-b") }
+      invalid_option_error = load_fixture "screens/invalid_option_error.txt"
+      assert_output(nil, invalid_option_error) { run_program("-b") }
     end
   end
 end
