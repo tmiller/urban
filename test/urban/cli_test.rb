@@ -3,7 +3,7 @@ require "open-uri"
 require "socket"
 require "shellwords"
 
-class CLITest < MiniTest::Unit::TestCase
+class CLITest < Urban::TestCase
 
   def run_program(args)
     @program.run(Shellwords.shellwords(args))

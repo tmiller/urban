@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DictionaryTest < MiniTest::Unit::TestCase
+class DictionaryTest < Urban::TestCase
 
   def setup
     @web_service = MiniTest::Mock.new
