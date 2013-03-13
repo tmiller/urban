@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'nokogiri', '~> 1.5.0'
-  s.add_development_dependency 'rake', '~> 0.8'
+  s.add_development_dependency 'rake', '~> 10.0.3'
   s.add_development_dependency 'minitest', '~> 2.0'
 end
