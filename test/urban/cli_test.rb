@@ -5,7 +5,6 @@ require 'shellwords'
 
 class CLITest < MiniTest::Unit::TestCase
 
-  # Helpers
   def run_program(args)
     @program.run(Shellwords.shellwords(args))
   end
@@ -16,7 +15,6 @@ class CLITest < MiniTest::Unit::TestCase
 
   class CLIArgumentParsingTest < CLITest
 
-    # Helpers
     def assert_flag_is_set(name)
       ["-#{name.chars.first}", "--#{name}"].each do |args|
         options = @program.send(:parse, [args])
@@ -24,7 +22,6 @@ class CLITest < MiniTest::Unit::TestCase
       end
     end
 
-    # Tests
     def test_defaults
       assert_silent do
         options = @program.send(:parse, [])
@@ -85,7 +82,6 @@ class CLITest < MiniTest::Unit::TestCase
       @dictionary = MiniTest::Mock.new
     end
 
-    # Tests
     def test_help_flag_prints_help
       help_screen = load_fixture "help_screen.txt"
       assert_output(help_screen) { @program.run([]) }
@@ -168,7 +164,6 @@ Try `urban --help' for more information.
       super
     end
 
-    # Tests
     def test_search_missing_phrase_prints_error
       dictionary = MiniTest::Mock.new
       @program.dictionary = dictionary.expect(:search, EMPTY_ENTRY, ['gubble'])
