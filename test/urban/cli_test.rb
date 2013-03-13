@@ -64,7 +64,7 @@ class CLITest < MiniTest::Unit::TestCase
       end
     end
 
-    def test_all_flag
+    def test_url_flag
       assert_silent do
         assert_flag_is_set('url')
       end
