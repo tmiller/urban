@@ -171,7 +171,7 @@ Try `urban --help' for more information.
       dictionary.verify
     end
 
-    def test_search_missing_phrase_prints_error
+    def test_search_with_no_internet_prints_error
       dictionary = (Object.new).extend Stub
       dictionary.stub(:search) { |phrase| raise SocketError }
       @program.dictionary = dictionary

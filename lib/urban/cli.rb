@@ -27,7 +27,7 @@ module Urban
           if output.definitions
             print_entry(output, options)
           else
-            $stderr.puts "urban: no definitions found for #{entry.phrase.upcase}."
+            $stderr.puts "urban: no definitions found for #{output.phrase.upcase}."
           end
         else
           puts output

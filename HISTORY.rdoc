@@ -1,25 +1,30 @@
+* Bug fixes
+
+  * Undefined words now show a cleaner error. This was apparently not fixed
+    in the prior release
+
 === 1.0.0
 
 * Major enhancements:
 
-  * Change `list` flag to the `all` flag for more clarity
-  * Remove query from Urban::Web replace with random and search
-  * Add `url` flag to print the url of the definition
+  * Change `list` flag to the `all` flag for more clarity.
+  * Remove query from Urban::Web replace with random and search.
+  * Add `url` flag to print the url of the definition.
 
 * Minor enhancements:
 
-  * Add this history file
-  * Add Urban::Web#fetch for fetching pages from urban dictionary
-  * Add examples to help
-  * Remove require 'rubygems' from program and lib
-  * Test now only stubs singleton instead of class
-  * Use ~> instead of >= on dependencies
-  * Replace OpenStruct in Urban::Dictionary with plain Struct
-  * Move Nokogiri call to Dictionary#process
+  * Add this history file.
+  * Add Urban::Web#fetch for fetching pages from urban dictionary.
+  * Add examples to help.
+  * Remove require 'rubygems' from program and lib.
+  * Test now only stubs singleton instead of class.
+  * Use ~> instead of >= on dependencies.
+  * Replace OpenStruct in Urban::Dictionary with plain Struct.
+  * Move Nokogiri call to Dictionary#process.
 
-* Bug fix:
+* Bug fixs:
 
-  * Passing -v or --version no longer prints help
-  * Undefined words now show a clean error
-  * No internet connection now shows a clean error
-  * Invalid options now show a clean error
+  * Passing -v or --version no longer prints help.
+  * Undefined words now show a clean error.
+  * No internet connection now shows a clean error.
+  * Invalid options now show a clean error.
