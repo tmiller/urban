@@ -23,4 +23,5 @@ coverage/*
 # Ignore individual preferences
 .rvmrc
 .rbenv-version
+.ruby-version
 vendor/bundle/*
