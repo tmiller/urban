@@ -17,10 +17,10 @@ class WebTest < MiniTest::Unit::TestCase
     end
 
     def test_fetch_with_params
-      expected = "http://www.urbandictionary.com/test.php?term=bar&name=foo"
+      expected = /http:\/\/www\.urbandictionary\.com\/test\.php\?\w+=\w+&\w+=\w+/
       Kernel.stub :open, @reflect_args do
         actual = Urban::Web.fetch('test.php', :term => 'bar', :name => 'foo')
-        assert_equal expected, actual
+        assert_match expected, actual
       end
     end
   end
