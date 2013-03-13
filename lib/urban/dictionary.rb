@@ -35,7 +35,7 @@ module Urban
     end
 
     def parse_definitions(document)
-      definitions = document.xpath('//td/div[@class="definition"]').map do |node|
+      document.xpath('//td/div[@class="definition"]').map do |node|
         node.xpath('//br').each { |br| br.replace(Nokogiri::XML::Text.new("\n", node.document)) };
         node.content.strip
       end
