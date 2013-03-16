@@ -15,7 +15,6 @@ module Urban
     def run(args = ARGV)
       options = parse(args)
       results = case
-        when options.help           ; usage
         when options.version        ; version
         when options.random         ; dictionary.random
         when !options.phrase.empty? ; dictionary.search(options.phrase)
@@ -66,7 +65,7 @@ module Urban
         o.on('-a', '--all') { options.all = true }
         o.on('-r', '--random') { options.random = true }
         o.on('-u', '--url') { options.url = true }
-        o.on('-h', '--help') { options.help = true }
+        o.on('-h', '--help')
         o.on('-v', '--version') { options.version = true }
       end
 

@@ -36,10 +36,6 @@ class CLITest < Urban::TestCase
       assert_equal "foo bar", options.phrase
     end
 
-    def test_help_flag
-      assert_flag_is_set "help"
-    end
-
     def test_version_flag
       assert_flag_is_set "version"
     end
