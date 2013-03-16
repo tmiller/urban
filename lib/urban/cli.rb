@@ -16,20 +16,16 @@ module Urban
       options = parse(args)
 
       results = case
-        when options.random         ; dictionary.random
-        when !options.phrase.empty? ; dictionary.search(options.phrase)
-        when options.version        ; version
-        else                        ; usage
+        when options.random then dictionary.random
+        when options.search then dictionary.search(options.phrase)
       end
 
-      if results.respond_to?(:phrase)
-        if results.definitions
-          generate_output(results, options)
-        else
-          error "no definitions found for #{results.phrase.upcase}."
-        end
+      if results && results.definitions
+        generate_output(results, options)
+      elsif results
+        error "no definitions found for #{results.phrase.upcase}."
       else
-        puts results
+        puts options.version ? version : usage
       end
 
     rescue SocketError
@@ -72,6 +68,7 @@ module Urban
 
       options_parser.parse!(args)
       options.phrase = args.join(' ')
+      options.search = !options.phrase.empty?
       options
     end
 
