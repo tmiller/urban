@@ -15,7 +15,7 @@ module Urban
     def run(args = ARGV)
       begin
         options = parse(args)
-        output = case
+        results = case
           when options.help           ; usage
           when options.version        ; version
           when options.random         ; dictionary.random
@@ -23,14 +23,14 @@ module Urban
           else                        ; usage
         end
 
-        if output.respond_to?(:phrase)
-          if output.definitions
-            print_entry(output, options)
+        if results.respond_to?(:phrase)
+          if results.definitions
+            generate_output(results, options)
           else
-            error "no definitions found for #{output.phrase.upcase}."
+            error "no definitions found for #{results.phrase.upcase}."
           end
         else
-          puts output
+          puts results
         end
 
       rescue SocketError
@@ -48,14 +48,16 @@ module Urban
       $stderr.puts "urban: #{message}"
     end
 
-    def print_entry(entry, options)
-      puts "\n#{entry.phrase.upcase}\n\n"
+    def generate_output(entry, options)
+      output = "\n#{entry.phrase.upcase}\n\n"
       if options.all
-        puts "#{entry.definitions.join("\n\n")}\n\n"
+        output << "#{entry.definitions.join("\n\n")}\n\n"
       else
-        puts "#{entry.definitions.first}\n\n"
+        output << "#{entry.definitions.first}\n\n"
       end
-      puts "URL: #{entry.url}\n\n" if options.url
+      output << "URL: #{entry.url}\n\n" if options.url
+
+      puts output
     end
 
     def parse(args)
