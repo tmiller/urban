@@ -54,7 +54,6 @@ module Urban
 
     def parse(args)
       options = OpenStruct.new
-      options.random, options.all, options.version, options.help = false
 
       options_parser = OptionParser.new do |o|
         o.on('-a', '--all') { options.all = true }
@@ -74,7 +73,7 @@ module Urban
       case
       when options.random then dictionary.random
       when options.search then dictionary.search(options.phrase)
-      else OpenStruct.new :definitions => false
+      else OpenStruct.new
       end
     end
 
