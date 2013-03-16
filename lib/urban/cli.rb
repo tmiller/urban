@@ -14,10 +14,11 @@ module Urban
 
     def run(args = ARGV)
       options = parse(args)
+
       results = case
-        when options.version        ; version
         when options.random         ; dictionary.random
         when !options.phrase.empty? ; dictionary.search(options.phrase)
+        when options.version        ; version
         else                        ; usage
       end
 
