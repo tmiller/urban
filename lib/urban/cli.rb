@@ -13,33 +13,31 @@ module Urban
     end
 
     def run(args = ARGV)
-      begin
-        options = parse(args)
-        results = case
-          when options.help           ; usage
-          when options.version        ; version
-          when options.random         ; dictionary.random
-          when !options.phrase.empty? ; dictionary.search(options.phrase)
-          else                        ; usage
-        end
-
-        if results.respond_to?(:phrase)
-          if results.definitions
-            generate_output(results, options)
-          else
-            error "no definitions found for #{results.phrase.upcase}."
-          end
-        else
-          puts results
-        end
-
-      rescue SocketError
-        error 'no internet connection available.'
-      rescue OptionParser::InvalidOption => e
-        error "#{e.message}\nTry `urban --help' for more information."
-      rescue Exception => e
-        error e.message
+      options = parse(args)
+      results = case
+        when options.help           ; usage
+        when options.version        ; version
+        when options.random         ; dictionary.random
+        when !options.phrase.empty? ; dictionary.search(options.phrase)
+        else                        ; usage
       end
+
+      if results.respond_to?(:phrase)
+        if results.definitions
+          generate_output(results, options)
+        else
+          error "no definitions found for #{results.phrase.upcase}."
+        end
+      else
+        puts results
+      end
+
+    rescue SocketError
+      error 'no internet connection available.'
+    rescue OptionParser::InvalidOption => e
+      error "#{e.message}\nTry `urban --help' for more information."
+    rescue StandardError => e
+      error e.message
     end
 
     private
