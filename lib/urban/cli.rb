@@ -16,11 +16,11 @@ module Urban
       begin
         options = parse(args)
         output = case
-          when options.help           ; options.help_screen
-          when options.version        ; "Urban #{Urban::VERSION} (c) Thomas Miller"
+          when options.help           ; usage
+          when options.version        ; version
           when options.random         ; dictionary.random
           when !options.phrase.empty? ; dictionary.search(options.phrase)
-          else                        ; options.help_screen
+          else                        ; usage
         end
 
         if output.respond_to?(:phrase)
@@ -59,39 +59,36 @@ module Urban
 
     def parse(args)
       options = OpenStruct.new
-      options.random = options.all = options.version = options.help = false
+      options.random, options.all, options.version, options.help = false
 
-      opts = OptionParser.new do |o|
-        o.banner = <<-EOB
+      options_parser = OptionParser.new do |o|
+        o.on('-a', '--all') { options.all = true }
+        o.on('-r', '--random') { options.random = true }
+        o.on('-u', '--url') { options.url = true }
+        o.on('-h', '--help') { options.help = true }
+        o.on('-v', '--version') { options.version = true }
+      end
+
+      options_parser.parse!(args)
+      options.phrase = args.join(' ')
+      options
+    end
+
+    def version
+      "Urban #{Urban::VERSION} (c) Thomas Miller"
+    end
+
+    def usage
+      <<-EOS
 Usage: urban [OPTION]... [PHRASE]
 Search http://urbandictionary.com for definitions of phrases
 
-        EOB
-
-        o.separator "Options:"
-        o.on('-a', '--all', 'List all definitions') do
-          options.all = true
-        end
-
-        o.on('-r', '--random', 'Return a random phrase and definition') do
-          options.random = true
-        end
-
-        o.on('-u', '--url', "Print the definition's url after the definition") do
-          options.url = true
-        end
-
-        o.on('-h', '--help', 'Show this message') do
-          options.help = true
-        end
-
-        o.on('-v', '--version', 'Show version information') do
-          options.version = true
-        end
-
-      end
-
-      examples = <<-EOE
+Options:
+    -a, --all                        List all definitions
+    -r, --random                     Return a random phrase and definition
+    -u, --url                        Print the definition's url after the definition
+    -h, --help                       Show this message
+    -v, --version                    Show version information
 
 Examples:
     urban cookie monster        Search for "cookie monster" and print its
@@ -102,11 +99,7 @@ Examples:
     urban -ra                   Print a random phrase and all of its available
                                 definitions
 
-      EOE
-      opts.parse!(args)
-      options.phrase = args.join(' ')
-      options.help_screen = opts.help + examples
-      options
+      EOS
     end
   end
 end
