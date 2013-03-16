@@ -51,7 +51,7 @@ module Urban
     def print_entry(entry, options)
       puts "\n#{entry.phrase.upcase}\n\n"
       if options.all
-        entry.definitions.each { |definition| puts "#{definition}\n\n" }
+        puts "#{entry.definitions.join("\n\n")}\n\n"
       else
         puts "#{entry.definitions.first}\n\n"
       end
