@@ -27,22 +27,26 @@ module Urban
           if output.definitions
             print_entry(output, options)
           else
-            $stderr.puts "urban: no definitions found for #{output.phrase.upcase}."
+            error "no definitions found for #{output.phrase.upcase}."
           end
         else
           puts output
         end
 
       rescue SocketError
-        $stderr.puts 'urban: no internet connection available.'
+        error 'no internet connection available.'
       rescue OptionParser::InvalidOption => e
-        $stderr.puts "urban: #{e.message}\nTry `urban --help' for more information."
+        error "#{e.message}\nTry `urban --help' for more information."
       rescue Exception => e
-        $stderr.puts e.message
+        error e.message
       end
     end
 
     private
+
+    def error(message)
+      $stderr.puts "urban: #{message}"
+    end
 
     def print_entry(entry, options)
       puts "\n#{entry.phrase.upcase}\n\n"
