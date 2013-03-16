@@ -13,19 +13,17 @@ module Urban
     end
 
     def run(args = ARGV)
+
       options = parse(args)
+      results = lookup(options)
 
-      results = case
-        when options.random then dictionary.random
-        when options.search then dictionary.search(options.phrase)
-      end
-
-      if results && results.definitions
-        generate_output(results, options)
-      elsif results
+      case
+      when results.definitions
+        generate_output results, options
+      when results.phrase
         error "no definitions found for #{results.phrase.upcase}."
       else
-        puts options.version ? version : usage
+        $stdout.puts options.version ? version : usage
       end
 
     rescue SocketError
@@ -70,6 +68,14 @@ module Urban
       options.phrase = args.join(' ')
       options.search = !options.phrase.empty?
       options
+    end
+
+    def lookup(options)
+      case
+      when options.random then dictionary.random
+      when options.search then dictionary.search(options.phrase)
+      else OpenStruct.new :definitions => false
+      end
     end
 
     def version
