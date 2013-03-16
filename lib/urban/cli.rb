@@ -44,9 +44,6 @@ module Urban
 
     private
 
-    def print_error(entry)
-    end
-
     def print_entry(entry, options)
       puts "\n#{entry.phrase.upcase}\n\n"
       if options.all
