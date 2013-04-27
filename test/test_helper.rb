@@ -1,14 +1,13 @@
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 
 require 'rubygems'
-gem 'minitest' if RUBY_VERSION > '1.9'
 require 'minitest/autorun'
+require 'minitest/pride'
 require 'urban'
 require 'urban/cli'
-require 'minitest/stop_light'
 require 'ostruct'
 
-class Urban::TestCase < MiniTest::Unit::TestCase
+class Urban::Test < Minitest::Test
 
   def load_fixture(filename)
     IO.read(File.expand_path("../fixtures/#{filename}", __FILE__))

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class WebTest < Urban::TestCase
+class WebTest < Urban::Test
 
   class WebFetchTest < WebTest
     def setup
