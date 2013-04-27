@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'urban/version'
+require 'urban'
 require 'urban/cli'
 
 Urban::CLI.new.run(ARGV)

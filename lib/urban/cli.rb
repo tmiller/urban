@@ -1,7 +1,6 @@
 require "optparse"
 require "ostruct"
 require "socket"
-require "urban/dictionary"
 
 module Urban
   class CLI

@@ -1,6 +1,4 @@
 require "nokogiri"
-require "urban/version"
-require "urban/web"
 
 module Urban
   module Dictionary

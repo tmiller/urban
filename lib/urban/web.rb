@@ -1,5 +1,4 @@
 require 'open-uri'
-require 'urban/version'
 
 module Urban
   module Web
