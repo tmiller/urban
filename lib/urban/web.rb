@@ -1,12 +1,9 @@
 require 'open-uri'
 
 module Urban
-  module Web
-    extend self
+  class Web
 
     Response = Struct.new(:url, :stream)
-
-    attr_writer :url
 
     def search(phrase)
       result = fetch "define.php", :term => phrase
@@ -20,14 +17,18 @@ module Urban
 
     def fetch(page, parameters = {})
       params = '?' +  parameters.map { |k,v| "#{k}=#{v}" }.join('&') unless parameters.empty?
-      Kernel.open(escape_uri("#{url}/#{page}#{params}"))
-    end
-
-    def url
-      @url ||= 'http://www.urbandictionary.com'
+      open(escape_uri("#{url}/#{page}#{params}"))
     end
 
     private
+
+    def url
+      'http://www.urbandictionary.com'
+    end
+
+    def open(*args)
+      Kernel.open(*args)
+    end
 
     def escape_uri(uri)
       if RUBY_VERSION > '1.9'

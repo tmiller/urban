@@ -16,7 +16,7 @@ module Urban
     end
 
     def web_service
-      @web_service ||= Urban::Web
+      @web_service ||= Urban::Web.new
     end
 
   private
