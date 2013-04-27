@@ -1,7 +1,7 @@
-require 'optparse'
-require 'ostruct'
-require 'socket'
-require 'urban/dictionary'
+require "optparse"
+require "ostruct"
+require "socket"
+require "urban/dictionary"
 
 module Urban
   class CLI
@@ -27,7 +27,7 @@ module Urban
       end
 
     rescue SocketError
-      error 'no internet connection available.'
+      error "no internet connection available."
     rescue OptionParser::InvalidOption => e
       error "#{e.message}\nTry `urban --help' for more information."
     rescue StandardError => e
@@ -56,15 +56,15 @@ module Urban
       options = OpenStruct.new
 
       options_parser = OptionParser.new do |o|
-        o.on('-a', '--all') { options.all = true }
-        o.on('-r', '--random') { options.random = true }
-        o.on('-u', '--url') { options.url = true }
-        o.on('-h', '--help')
-        o.on('-v', '--version') { options.version = true }
+        o.on("-a", "--all") { options.all = true }
+        o.on("-r", "--random") { options.random = true }
+        o.on("-u", "--url") { options.url = true }
+        o.on("-h", "--help")
+        o.on("-v", "--version") { options.version = true }
       end
 
       options_parser.parse!(args)
-      options.phrase = args.join(' ')
+      options.phrase = args.join(" ")
       options.search = !options.phrase.empty?
       options
     end

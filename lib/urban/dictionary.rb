@@ -1,6 +1,6 @@
-require 'nokogiri'
-require 'urban/version'
-require 'urban/web'
+require "nokogiri"
+require "urban/version"
+require "urban/web"
 
 module Urban
   module Dictionary
@@ -36,7 +36,7 @@ module Urban
 
     def parse_definitions(document)
       document.xpath('//td/div[@class="definition"]').map do |node|
-        node.xpath('//br').each { |br| br.replace(Nokogiri::XML::Text.new("\n", node.document)) };
+        node.xpath("//br").each { |br| br.replace(Nokogiri::XML::Text.new("\n", node.document)) };
         node.content.strip
       end
     end

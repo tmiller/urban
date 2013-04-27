@@ -1,11 +1,10 @@
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 
-require 'rubygems'
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'urban'
-require 'urban/cli'
-require 'ostruct'
+require "rubygems"
+require "minitest/autorun"
+require "minitest/pride"
+require "urban"
+require "ostruct"
 
 class Urban::Test < Minitest::Test
 

@@ -1,7 +1,6 @@
 require "test_helper"
-require "open-uri"
-require "socket"
 require "shellwords"
+require "urban/cli"
 
 class CLITest < Urban::Test
 

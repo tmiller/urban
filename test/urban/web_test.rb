@@ -1,4 +1,5 @@
-require 'test_helper'
+require "test_helper"
+require "urban/web"
 
 class WebTest < Urban::Test
 
@@ -8,7 +9,7 @@ class WebTest < Urban::Test
     end
 
     def test_fetch_with_no_params
-      expected = 'http://www.urbandictionary.com/test.php'
+      expected = "http://www.urbandictionary.com/test.php"
       Kernel.stub :open, @reflect_args do
         actual = Urban::Web.fetch("test.php")
         assert_equal(expected, actual)
@@ -18,7 +19,7 @@ class WebTest < Urban::Test
     def test_fetch_with_params
       expected = /http:\/\/www\.urbandictionary\.com\/test\.php\?\w+=\w+&\w+=\w+/
       Kernel.stub :open, @reflect_args do
-        actual = Urban::Web.fetch('test.php', :term => 'bar', :name => 'foo')
+        actual = Urban::Web.fetch("test.php", :term => "bar", :name => "foo")
         assert_match expected, actual
       end
     end
@@ -42,7 +43,7 @@ class WebTest < Urban::Test
 
     def test_returns_response_for_define_with_phrase
       Kernel.stub :open, @expected do
-        actual = Urban::Web.search('cookie monster')
+        actual = Urban::Web.search("cookie monster")
         assert_equal @expected.base_uri, actual.url
         assert_equal @expected, actual.stream
       end
