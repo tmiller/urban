@@ -30,7 +30,7 @@ module Urban
       error "no internet connection available."
     rescue OptionParser::InvalidOption => e
       error "#{e.message}\nTry `urban --help' for more information."
-    rescue StandardError => e
+    rescue Object => e
       error e.message
     end
 
