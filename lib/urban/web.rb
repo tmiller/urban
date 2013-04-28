@@ -6,36 +6,43 @@ module Urban
     Response = Struct.new(:url, :stream)
 
     def search(phrase)
-      result = fetch "define.php", :term => phrase
-      Response.new(result.base_uri.to_s, result)
+      build_response fetch :define, :term => phrase
     end
 
     def random
-      result = fetch "random.php"
-      Response.new(result.base_uri.to_s, result)
-    end
-
-    def fetch(page, parameters = {})
-      params = '?' +  parameters.map { |k,v| "#{k}=#{v}" }.join('&') unless parameters.empty?
-      open(escape_uri("#{url}/#{page}#{params}"))
+      build_response fetch :random
     end
 
     private
 
-    def url
-      'http://www.urbandictionary.com'
+    def fetch(*args)
+      open build_uri(*args)
     end
 
-    def open(*args)
-      Kernel.open(*args)
+    def build_response(response)
+      Response.new response.base_uri.to_s, response
+    end
+
+    def build_uri(page, params = nil)
+      query = build_query(params) unless params.nil?
+      escape_uri "#{url}/#{page}.php#{query}"
+    end
+
+    def build_query(parameters)
+      "?" + parameters.map { |k,v| "#{k}=#{v}" }.join("&")
     end
 
     def escape_uri(uri)
       if RUBY_VERSION > '1.9'
-        URI::Parser.new.escape(uri)
+        URI::Parser.new.escape uri
       else
-        URI.escape(uri)
+        URI.escape uri
       end
     end
+
+    def url
+      "http://www.urbandictionary.com"
+    end
+
   end
 end
