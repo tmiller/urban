@@ -4,14 +4,21 @@ require "urban/cli"
 
 class CLITest < Urban::Test
 
-  attr_accessor :program
+  attr_accessor :program, :dictionary
 
-  def run_program(args)
-    program.run(Shellwords.shellwords(args))
+  def nothing; "" end
+
+  def assert_program_output(stdout, stderr, args)
+    assert_output stdout, stderr do
+      program.run(Shellwords.shellwords(args))
+    end
   end
 
   def setup
     self.program = Urban::CLI.new
+    self.dictionary = Urban::Dictionary.new
+
+    program.dictionary = dictionary
   end
 
   class CLIArgumentParsingTest < CLITest
@@ -56,64 +63,60 @@ class CLITest < Urban::Test
 
   class CLIRunnerStandardOutputTest < CLITest
 
-    attr_accessor :dictionary
-
     def setup
       super
-      self.dictionary = Urban::Dictionary.new
-      program.dictionary = dictionary
     end
 
     def test_help_flag_prints_help
       help_screen = load_fixture "screens/help.txt"
-      assert_output(help_screen, "") { program.run([]) }
+      assert_program_output help_screen, nothing, nothing
     end
 
     def test_version_flag_prints_version
       version_screen = "Urban #{Urban::VERSION} (c) Thomas Miller\n"
-      assert_output(version_screen, "") { run_program "--version" }
+      assert_program_output version_screen, nothing, "--version"
     end
 
     def test_random_flag_prints_single_definition
       single_definition = load_fixture "screens/definition.txt"
 
       dictionary.stub(:random, test_entry) do
-        assert_output(single_definition, "") { run_program "--random" }
+        assert_program_output single_definition, nothing, "--random"
       end
     end
 
     def test_phrase_prints_single_definition
       single_definition = load_fixture "screens/definition.txt"
       dictionary.stub(:search, test_entry) do
-        assert_output(single_definition, "") { run_program "impromptu" }
+        assert_program_output single_definition, nothing, "impromptu"
       end
     end
 
     def test_random_and_all_flag_prints_multiple_definitions
       multiple_definitions = load_fixture "screens/definitions.txt"
       dictionary.stub(:random, test_entry) do
-        assert_output(multiple_definitions, "") { run_program "--all --random" }
+        assert_program_output multiple_definitions, nothing, "--all --random"
       end
     end
 
     def test_phrase_and_all_flag_prints_multiple_definitions
       multiple_definitions = load_fixture "screens/definitions.txt"
       dictionary.stub(:search, test_entry) do
-        assert_output(multiple_definitions, "") { run_program "--all impromptu" }
+        assert_program_output multiple_definitions, nothing, "--all impromptu"
       end
     end
 
     def test_random_and_url_flag_prints_definition_with_url
       definition_with_url = load_fixture "screens/definition_with_url.txt"
       dictionary.stub(:random, test_entry) do
-        assert_output(definition_with_url, "") { run_program "--url --random" }
+        assert_program_output definition_with_url, nothing, "--url --random"
       end
     end
 
     def test_phrase_and_url_flag_prints_definition_with_url
       definition_with_url = load_fixture "screens/definition_with_url.txt"
       dictionary.stub(:search, test_entry) do
-        assert_output(definition_with_url, "") { run_program "--url impromptu" }
+        assert_program_output definition_with_url, nothing, "--url impromptu"
       end
     end
 
@@ -121,19 +124,15 @@ class CLITest < Urban::Test
 
   class CLIRunnerErrorOutputTest < CLITest
 
-    attr_accessor :dictionary
-
     def setup
       super
-      self.dictionary = Urban::Dictionary.new
-      program.dictionary = dictionary
     end
 
     def test_search_missing_phrase_prints_error
       missing_phrase_error = load_fixture "screens/missing_phrase_error.txt"
 
       dictionary.stub :search, empty_entry do
-        assert_output("", missing_phrase_error) { run_program("gubble") }
+        assert_program_output nothing, missing_phrase_error, "gubble"
       end
     end
 
@@ -143,13 +142,13 @@ class CLITest < Urban::Test
       raise_socket_error = Proc.new { raise SocketError }
 
       dictionary.stub :search, raise_socket_error do
-        assert_output("", no_internet_error) { run_program("gubble") } 
+        assert_program_output nothing, no_internet_error, "gubble"
       end
     end
 
     def test_invalid_option_prints_help
       invalid_option_error = load_fixture "screens/invalid_option_error.txt"
-      assert_output("", invalid_option_error) { run_program("-b") }
+      assert_program_output nothing, invalid_option_error, "-b"
     end
   end
 end
