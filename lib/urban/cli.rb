@@ -48,7 +48,7 @@ module Urban
       end
       output << "URL: #{entry.url}\n\n" if options.url
 
-      puts output
+      $stdout.puts output
     end
 
     def parse(args)
