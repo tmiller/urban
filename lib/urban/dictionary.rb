@@ -1,10 +1,10 @@
 require "nokogiri"
 
 module Urban
-  module Dictionary
-    extend self
+  class Dictionary
 
     Entry = Struct.new(:phrase, :definitions, :url)
+
     attr_writer :web_service
 
     def random

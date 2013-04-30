@@ -8,7 +8,7 @@ module Urban
     attr_accessor :dictionary
 
     def initialize
-      @dictionary = Urban::Dictionary
+      @dictionary = Urban::Dictionary.new
     end
 
     def run(args = ARGV)
