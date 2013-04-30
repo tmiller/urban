@@ -26,9 +26,11 @@ module Urban
       if not_defined = document.at_xpath('//div[@id="not_defined_yet"]/i')
         Entry.new(not_defined.content.strip, nil, nil)
       else
-        Entry.new( document.at_xpath('//td[@class="word"][1]').content.strip ,
-                   parse_definitions(document),
-                   response.url)
+        Entry.new(
+          document.at_xpath('//td[@class="word"][1]').content.strip,
+          parse_definitions(document),
+          response.url
+        )
       end
     end
 
