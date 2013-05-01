@@ -1,17 +1,22 @@
 = Urban
+
+* Home :: http://github.com/tmiller/urban
+* Bug Tracker :: http://github.com/tmiller/urban/issues
+
+== Description:
+
+Urban is a command line utility with an API to query definitions from Urban
+Dictionary.
+
+== BADGES
+
 {<img src="https://secure.travis-ci.org/tmiller/urban.png"/>}[http://travis-ci.org/tmiller/urban] {<img src="https://codeclimate.com/github/tmiller/urban.png" />}[https://codeclimate.com/github/tmiller/urban]
 
-Urban is a command line tool that allows you to look up definitions or pull a
-random definition from {Urban Dictionary}[http://www.urbandictionary.com].
-
-* {Git}[http://github.com/tmiller/urban]
-* {Bug Tracker}[http://github.com/tmiller/urban/issues]
-
-== Requirements
+== REQUIREMENTS
 
 * Ruby >= 1.8.7
 
-== Installation
+== INSTALLATION
 
 With Rubygems:
 
@@ -23,7 +28,7 @@ With git and local working copy
     $ cd urban
     $ sudo rake install
 
-== CLI Usage
+== CLI USAGE
 
 === 1. Look up a definition
 
@@ -49,7 +54,7 @@ With git and local working copy
     $ urban --help
     $ urban --version
 
-== API Usage
+== API USAGE
 
     require 'urban'
 

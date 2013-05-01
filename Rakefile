@@ -1,15 +1,21 @@
-require 'rubygems'
-require 'bundler/gem_helper'
-Bundler::GemHelper.install_tasks
+# -*- ruby -*-
+require "rubygems"
+require "hoe"
 
+Hoe.plugin :minitest
+Hoe.plugin :git
 
-task :default => :test
+Hoe.spec "urban" do
+  self.readme_file = "README.rdoc"
+  self.history_file = "History.rdoc"
 
-require 'rake/testtask'
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.options = "-p"
-  t.test_files = FileList['test/**/*_test.rb']
-  t.verbose = true
-  t.warning = true
+  license "MIT"
+  developer("Tom Miller", "jackerran@gmail.com")
+
+  dependency 'nokogiri',  '~> 1.5.0'
+
+  dependency 'rake',      '~> 10.0.3', :development
+  dependency 'minitest',  '~> 5.0',    :development
 end
+
+# vim: syntax=ruby

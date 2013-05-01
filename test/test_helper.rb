@@ -33,4 +33,3 @@ class Urban::Test < Minitest::Test
   end
 
 end
-
