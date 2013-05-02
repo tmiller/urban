@@ -1,0 +1,10 @@
+#!/bin/bash
+
+test_files=$(ls test/urban)
+
+script=""
+for file in $test_files; do
+  script="${script} require 'urban/${file}'; "
+done
+
+ruby -w -Ilib:test -e "${script}"
