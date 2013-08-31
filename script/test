@@ -7,4 +7,4 @@ for file in $test_files; do
   script="${script} require 'urban/${file}'; "
 done
 
-ruby -w -Ilib:test -e "${script}"
+ruby -w -Ilib:test:. -e "${script}"
