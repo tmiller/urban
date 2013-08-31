@@ -1,0 +1,3 @@
+dependencies:
+  post:
+    - gem install hoe minitest nokogiri
