@@ -14,8 +14,8 @@ Hoe.spec "urban" do
 
   dependency 'nokogiri',  '~> 1.5.0'
 
-  dependency 'rake',      '~> 10.0.3', :development
-  dependency 'minitest',  '~> 5.0',    :development
+  dependency 'rake',      '~> 10.0', :development
+  dependency 'minitest',  '~> 5.0',  :development
 end
 
 # vim: syntax=ruby
