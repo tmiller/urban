@@ -5,6 +5,8 @@
 
 * Bug fixes
 
+  * Urban Dictionary redesigned the website. Xpath selectors were out of date
+    and would not return results properly.
   * Undefined words now show a cleaner error. This was apparently not fixed
     in the prior release.
 

@@ -27,7 +27,7 @@ module Urban
         Entry.new(not_defined.content.strip, nil, nil)
       else
         Entry.new(
-          document.at_xpath('//td[@class="word"][1]').content.strip,
+          document.at_xpath('//a[@class="word"][1]').content.strip,
           parse_definitions(document),
           response.url
         )
@@ -35,7 +35,7 @@ module Urban
     end
 
     def parse_definitions(document)
-      document.xpath('//td/div[@class="definition"]').map do |node|
+      document.xpath('//div[@class="def-panel"]/div[@class="meaning"]').map do |node|
         node.xpath("//br").each { |br| br.replace(Nokogiri::XML::Text.new("\n", node.document)) };
         node.content.strip
       end
