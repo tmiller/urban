@@ -1,13 +1,15 @@
-Manifest.txt
+.travis.yml
 HISTORY.rdoc
-README.rdoc
 LICENSE
+Manifest.txt
+README.rdoc
 Rakefile
 bin/urban
 lib/urban.rb
 lib/urban/cli.rb
 lib/urban/dictionary.rb
 lib/urban/web.rb
+script/test
 test/fixtures/impromptu.html
 test/fixtures/missing.html
 test/fixtures/screens/definition.txt
