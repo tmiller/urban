@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-# stub: urban 2.0.0.20160106190123 ruby lib
+# stub: urban 2.0.1.20160106192934 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "urban"
-  s.version = "2.0.0.20160106190123"
+  s.version = "2.0.1.20160106192934"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.description = "Urban is a command line utility with an API to query definitions from Urban\nDictionary."
   s.email = ["jackerran@gmail.com"]
   s.executables = ["urban"]
-  s.extra_rdoc_files = ["HISTORY.rdoc", "Manifest.txt", "README.rdoc"]
-  s.files = [".travis.yml", "HISTORY.rdoc", "LICENSE", "Manifest.txt", "README.rdoc", "Rakefile", "bin/urban", "lib/urban.rb", "lib/urban/cli.rb", "lib/urban/dictionary.rb", "lib/urban/web.rb", "script/test", "test/fixtures/impromptu.html", "test/fixtures/missing.html", "test/fixtures/screens/definition.txt", "test/fixtures/screens/definition_with_url.txt", "test/fixtures/screens/definitions.txt", "test/fixtures/screens/help.txt", "test/fixtures/screens/invalid_option_error.txt", "test/fixtures/screens/missing_phrase_error.txt", "test/fixtures/screens/no_internet_error.txt", "test/test_helper.rb", "test/urban/cli_test.rb", "test/urban/dictionary_test.rb", "test/urban/web_test.rb"]
+  s.extra_rdoc_files = ["History.rdoc", "Manifest.txt", "README.rdoc"]
+  s.files = [".travis.yml", "History.rdoc", "LICENSE", "Manifest.txt", "README.rdoc", "Rakefile", "bin/urban", "lib/urban.rb", "lib/urban/cli.rb", "lib/urban/dictionary.rb", "lib/urban/web.rb", "script/test", "test/fixtures/impromptu.html", "test/fixtures/missing.html", "test/fixtures/screens/definition.txt", "test/fixtures/screens/definition_with_url.txt", "test/fixtures/screens/definitions.txt", "test/fixtures/screens/help.txt", "test/fixtures/screens/invalid_option_error.txt", "test/fixtures/screens/missing_phrase_error.txt", "test/fixtures/screens/no_internet_error.txt", "test/test_helper.rb", "test/urban/cli_test.rb", "test/urban/dictionary_test.rb", "test/urban/web_test.rb"]
   s.homepage = "http://github.com/tmiller/urban"
   s.licenses = ["MIT"]
   s.rdoc_options = ["--main", "README.rdoc"]

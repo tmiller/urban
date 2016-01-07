@@ -1,4 +1,5 @@
 .travis.yml
+Gemfile
 History.rdoc
 LICENSE
 Manifest.txt
@@ -23,3 +24,4 @@ test/test_helper.rb
 test/urban/cli_test.rb
 test/urban/dictionary_test.rb
 test/urban/web_test.rb
+urban.gemspec
