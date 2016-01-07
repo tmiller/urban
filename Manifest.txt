@@ -1,5 +1,5 @@
 .travis.yml
-HISTORY.rdoc
+History.rdoc
 LICENSE
 Manifest.txt
 README.rdoc

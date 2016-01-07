@@ -1,4 +1,10 @@
-=== 2.0.0
+* Minor enhancements:
+
+  * Fixed failing tests in Travis CI
+  * Moved HISTORY.rdoc to History.rdoc
+  * Testing more versions of ruby
+
+=== 2.0.0 2016-01-06
 
 * Major enhancements:
 
@@ -12,7 +18,7 @@
   * Undefined words now show a cleaner error. This was apparently not fixed
     in the prior release.
 
-=== 1.0.0
+=== 1.0.0 2011-09-10
 
 * Major enhancements:
 
